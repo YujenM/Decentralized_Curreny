@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 require("dotenv").config();
 
-const pool=mysql.createPool({
+const pool = mysql.createPool({
     connectionLimit: 10,
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -9,32 +9,29 @@ const pool=mysql.createPool({
     database: process.env.DB_NAME
 });
 
-const connection =(callback)=>{
-    pool.getConnection((err,connection)=>{
-        if(err){
-            return callback("Connection err"+err);
+const connection = (callback) => {
+    pool.getConnection((err, connection) => {
+        if (err) {
+            return callback("Connection error: " + err.message);
         }
-        connection.query('SELECT 1',(err)=>{
-            if(err){
-                connection.release();
-                return callback("Query err"+err);
-            } else{
-                connection.release();
-                return callback(null,connection);
+        connection.query('SELECT 1', (err) => {
+            connection.release();
+            if (err) {
+                return callback("Query error: " + err.message);
             }
-
+            return callback(null, connection);
         });
-    })
-}
+    });
+};
 
-const getquery = (query, callback) => {
+const getquery = (query, params, callback) => {
     pool.getConnection((err, connection) => {
         if (err) {
             return callback("Connection error: " + err.message);
         }
 
-        connection.query(query, (err, result) => {
-            connection.release(); // Always release the connection
+        connection.query(query, params, (err, result) => {
+            connection.release();
 
             if (err) {
                 return callback("Query error: " + err.message);
@@ -48,4 +45,4 @@ const getquery = (query, callback) => {
 module.exports = {
     connection,
     getquery
-}
+};
