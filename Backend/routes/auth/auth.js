@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 require("dotenv").config();
 
+// importing middleware
+const fetchusers=require('../../middleware/authmiddleware');
+
 // importing database
 const db = require('../../Database/ConnectDb');
 const { body, validationResult } = require('express-validator');
@@ -27,6 +30,7 @@ router.post('/usersignup', [
         .matches(/[A-Z]/).withMessage('Password must contain at least one uppercase letter')
         .matches(/[!@#$%^&*(),.?":{}|<>]/).withMessage('Password must contain at least one special character')
 ], (req, res) => {
+    success=false;
     const error = validationResult(req);
     if (!error.isEmpty()) {
         return res.status(400).json({
@@ -59,10 +63,8 @@ router.post('/usersignup', [
                         });
                     }
                     const token = jwt.sign({ user_id: result.insertId, email }, JWT_Secret_key);
-                    return res.status(200).json({
-                        message: "User added successfully",
-                        token: token
-                    });
+                    success=true;
+                    res.json(success,token);
                 });
             }
         });
@@ -116,7 +118,7 @@ router.post('/userlogin', [
                     return res.status(401).json({ error: 'Invalid credentials' });
                 }
 
-                const token = jwt.sign({ user_id: results[0].user_id }, 'your_jwt_secret', { expiresIn: '1h' });
+                const token = jwt.sign({ user_id: results[0].user_id }, JWT_Secret_key, { expiresIn: '1h' });
                 success=true;
                 res.json({ message: 'Login successful', token,success });
             } catch (err) {
@@ -127,6 +129,77 @@ router.post('/userlogin', [
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Server error' });
+    }
+});
+// get login user
+router.post('/getuser', fetchusers, async (req, res) => {
+    try {
+        const userid = req.user.user_id;
+        const userQuery = 'SELECT user_id, username, email, created_at FROM Users WHERE user_id = ?';
+        db.getquery(userQuery, [userid], (err, results) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: "Internal Server Error" });
+            }
+            if (results.length === 0) {
+                return res.status(404).json({ error: "User not found" });
+            }
+            res.json(results[0]);
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+
+//update and Forget  password
+router.post('/updatepassword', fetchusers, [
+    body('oldpassword').isLength({ min: 8 }).withMessage('Old password must be at least 8 characters long'),
+    body('newpassword')
+        .isLength({ min: 8 }).withMessage('New password must be at least 8 characters long')
+        .matches(/[A-Z]/).withMessage('New password must contain at least one uppercase letter')
+        .matches(/[!@#$%^&*(),.?":{}|<>]/).withMessage('New password must contain at least one special character')
+], async (req, res) => {
+    let success = false;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() }); 
+    }
+    const { oldpassword, newpassword } = req.body;
+    try {
+        const userid = req.user.user_id;
+        const userQuery = 'SELECT password_hash FROM Users WHERE user_id = ?';
+        db.getquery(userQuery, [userid], async (err, results) => {
+            if (err) {
+                console.error("Database query error: ", err);
+                return res.status(500).json({ error: "Internal Server Error" }); 
+            }
+            if (!results || results.length === 0) {
+                return res.status(404).json({ error: "User not found" }); // 404 Not Found
+            }
+
+            const isMatch = await bcrypt.compare(oldpassword, results[0].password_hash);
+            if (!isMatch) {
+                return res.status(401).json({ error: 'Old password is incorrect' }); 
+            }
+
+            const salt = bcrypt.genSaltSync(10);
+            const hashedNewPassword = bcrypt.hashSync(newpassword, salt);
+
+            const updatePasswordQuery = 'UPDATE Users SET password_hash = ? WHERE user_id = ?';
+            db.getquery(updatePasswordQuery, [hashedNewPassword, userid], (err, result) => {
+                if (err) {
+                    console.error("Database update error: ", err);
+                    return res.status(500).json({ error: "Internal Server Error" }); 
+                }
+                success = true;
+                res.status(200).json({ success, message: 'Password updated successfully' }); 
+            });
+        });
+    } catch (err) {
+        console.error("Server error: ", err);
+        res.status(500).json({ error: "Internal Server Error" }); 
     }
 });
 module.exports = router;
