@@ -183,7 +183,6 @@ router.post('/updatepassword', fetchusers, [
             if (!isMatch) {
                 return res.status(401).json({ error: 'Old password is incorrect' }); 
             }
-
             const salt = bcrypt.genSaltSync(10);
             const hashedNewPassword = bcrypt.hashSync(newpassword, salt);
 
