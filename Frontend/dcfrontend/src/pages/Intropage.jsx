@@ -1,15 +1,34 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import * as icon from '@fortawesome/free-solid-svg-icons';
-
+import '../Css/Authentication.css'
+import logo from '../Images/logo.png'
 function Intropage() {
   return (
-    <div>
-        <h1>Intro Page</h1>
-        <FontAwesomeIcon icon={icon.faBook}/>
-        <Link type='button' to='/Login'>Login</Link>
-        <Link to='/Signup'>Signup</Link>
+    <div className='maindiv '>
+      <div className="grid grid-cols-2 gap-5">
+        <div className="intro">
+          <div className="center">
+            <h1 className='text-4xl'>Get Started</h1>
+            <div className="button">
+              <div className='mt-4'> 
+                <Link to='/login' className='loginsignbtn'>Login</Link> <br/>
+                <Link to='/signup' className='loginsignbtn'>Sign Up</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="logo">
+          <div>
+              <div className="flex mark iflex-row ">
+                <img src={logo} alt="logo" className="logo-img"/>
+                <h1 className='mt-2 text-xl'>M.A.R.K</h1>
+              </div>
+              <p>
+                Market Analysis Of Real-Time Kurrencies
+              </p>
+            </div>
+          </div>
+      </div>
     </div>
   )
 }

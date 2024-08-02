@@ -1,0 +1,87 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --text-color: #E6E6FA;
+    --Button-color: #FF3333;
+    --background-color: #1C1931;
+    --rgba: 28, 25, 49;
+}
+
+.maindiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0 5%;
+
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+}
+.intro{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.intro {
+    height: 80vh;
+    width: 40vw;
+    background-color: rgba(var(--rgba), 0.3);
+    margin: 0 auto;
+}
+.center h1{
+    color: var(--text-color);
+}
+.button{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.loginsignbtn {
+    width: 100%;
+    height: 8vh; 
+    background-color: var(--Button-color);
+    color: var(--text-color);
+    font-size: 1.2rem; 
+    padding: 10px 50px; 
+    text-align: center;
+    border-radius: 5px;
+    display: inline-block;
+    text-decoration: none;
+    margin: 10px 0; 
+}
+
+
+.logo {
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mark{
+    justify-content: center;
+}
+.logo-img{
+    width: 50px;
+    height: 50px;
+}
+@media (max-width: 900px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .logo {
+        order: -1; 
+    }
+    .intro{
+        width: 90vw;
+        height: 60vh;
+        margin-top: 5%;
+    }
+}
