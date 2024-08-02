@@ -30,14 +30,14 @@ router.post('/usersignup', [
         .matches(/[A-Z]/).withMessage('Password must contain at least one uppercase letter')
         .matches(/[!@#$%^&*(),.?":{}|<>]/).withMessage('Password must contain at least one special character')
 ], (req, res) => {
-    success=false;
+    let success = false; // Corrected variable declaration
     const error = validationResult(req);
     if (!error.isEmpty()) {
         return res.status(400).json({
             error: error.array()
         });
     }
-    try{
+    try {
         const { username, email, password } = req.body;
         const checkemailquery = 'SELECT * FROM Users WHERE email = ?';
         db.getquery(checkemailquery, [email], (err, results) => {
@@ -63,26 +63,25 @@ router.post('/usersignup', [
                         });
                     }
                     const token = jwt.sign({ user_id: result.insertId, email }, JWT_Secret_key);
-                    success=true;
-                    res.json(success,token);
+                    success = true;
+                    res.json({ success, token }); // Corrected the response
                 });
             }
         });
-    }catch(err){
+    } catch (err) {
         return res.status(500).json({
-            error:"Server error"
-        })
+            error: "Server error"
+        });
     }
-    
 });
 
 // login route
+// login route
 router.post('/userlogin', [
-    body('username').isLength({ min: 4 }),
-    body('email').optional().isEmail(),
-    body('password').isLength({ min: 8 })
+    body('identifier').isLength({ min: 2 }).withMessage('Identifier must be at least 4 characters long'),
+    body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters long')
 ], async (req, res) => {
-    let success=false;
+    let success = false;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({
@@ -90,18 +89,18 @@ router.post('/userlogin', [
         });
     }
 
-    const { username, email, password } = req.body;
+    const { identifier, password } = req.body;
 
     try {
         let loginquery;
         let params;
 
-        if (email) {
-            loginquery = "SELECT user_id, password_hash FROM Users WHERE username = ? AND email = ?";
-            params = [username, email];
+        if (identifier.includes('@')) {
+            loginquery = "SELECT user_id, password_hash FROM Users WHERE email = ?";
+            params = [identifier];
         } else {
             loginquery = "SELECT user_id, password_hash FROM Users WHERE username = ?";
-            params = [username];
+            params = [identifier];
         }
 
         db.getquery(loginquery, params, async (error, results) => {
@@ -119,8 +118,8 @@ router.post('/userlogin', [
                 }
 
                 const token = jwt.sign({ user_id: results[0].user_id }, JWT_Secret_key, { expiresIn: '1h' });
-                success=true;
-                res.json({ message: 'Login successful', token,success });
+                success = true;
+                res.json({ message: 'Login successful', token, success });
             } catch (err) {
                 console.error(err);
                 res.status(500).json({ error: 'Server error' });
@@ -131,6 +130,7 @@ router.post('/userlogin', [
         res.status(500).json({ error: 'Server error' });
     }
 });
+
 // get login user
 router.post('/getuser', fetchusers, async (req, res) => {
     try {
