@@ -23,6 +23,10 @@ function Login() {
     e.preventDefault();
     const trimmedUsername = login.username.trim();
     const trimmedPassword = login.password.trim();
+    if (trimmedUsername === "" || trimmedPassword === "") {
+      alert("Username and password are required");
+      return;
+    }
     try {
       const response = await fetch("http://localhost:2000/api/auth/userlogin", {
         method: "POST",
@@ -37,9 +41,10 @@ function Login() {
       });
       const json = await response.json();
       if (json.success) {
-        localStorage.setItem("token", json.authtoken);
+        localStorage.setItem("authtoken", json.token); 
         console.log("Login success");
         alert("Login success");
+        setLogin({ username: "", email: "", password: "" });
         navigate("/");
       } else {
         console.log("Login failed:", json.message);
@@ -89,7 +94,7 @@ function Login() {
             <div className="username">
               <label htmlFor="username" className="labels">
                 <FontAwesomeIcon className="mr-2" icon={icon.faUser} />
-                Username
+                Username / Email
               </label>{" "}
               <br />
               <input
@@ -120,17 +125,16 @@ function Login() {
                 onClick={togglePasswordVisibility}
               >
                 <FontAwesomeIcon
-                className="eyeicon"
+                  className="eyeicon"
                   icon={passwordVisible ? icon.faEyeSlash : icon.faEye}
                 />
               </span>
-              
             </div>
             <div className="flex justify-end ">
-                <Link to="/forgot-password" className="text-sm forgotpass text-blue-500">
-                  Forgot Password?
-                </Link>
-              </div>
+              <Link to="/forgot-password" className="text-sm forgotpass text-blue-500">
+                Forgot Password?
+              </Link>
+            </div>
             <div className="submit-btn flex justify-center ">
               <button className="loginbtn mt-3">Sign In</button>
             </div>

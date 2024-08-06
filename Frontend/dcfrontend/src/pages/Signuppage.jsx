@@ -40,6 +40,7 @@ function Signuppage() {
       const json = await response.json();
       if (json.success) {
         alert("Signup success");
+        setSignup({ username: '', email: '', password: '' });
         navigate("/login");
       } else {
         alert("Signup failed: " + json.error);
