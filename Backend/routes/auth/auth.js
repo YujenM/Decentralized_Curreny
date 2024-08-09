@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 require("dotenv").config();
-
+const passport = require('passport');
+require('./googleauth');
 // importing middleware
 const fetchusers=require('../../middleware/authmiddleware');
+const session = require('express-session');
 
 // importing database
 const db = require('../../Database/ConnectDb');
@@ -201,4 +203,16 @@ router.post('/updatepassword', fetchusers, [
         res.status(500).json({ error: "Internal Server Error" }); 
     }
 });
+
+router.use(passport.initialize());
+router.use(passport.session());
+
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+router.get('/google/callback', 
+    passport.authenticate('google', { failureRedirect: '/login' }),
+    (req, res) => {
+        res.redirect(`http://localhost:3000/auth/google/success?token=${req.user.token}`);
+    }
+);
 module.exports = router;
