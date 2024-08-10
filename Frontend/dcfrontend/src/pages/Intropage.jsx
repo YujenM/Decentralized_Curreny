@@ -21,7 +21,7 @@ function Intropage() {
           <div>
               <div className="flex mark iflex-row ">
                 <img src={logo} alt="logo" className="logo-img"/>
-                <h1 className='mt-2 text-xl'>M.A.R.K</h1>
+                <h1 className='mt-7 text-4xl'>M.A.R.K</h1>
               </div>
               <p>
                 Market Analysis Of Real-Time Kurrencies
