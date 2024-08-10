@@ -45,7 +45,7 @@ function Login() {
         console.log("Login success");
         alert("Login success");
         setLogin({ username: "", email: "", password: "" });
-        navigate("/");
+        navigate("/dashboard");
       } else {
         console.log("Login failed:", json.message);
         alert("Login failed");
