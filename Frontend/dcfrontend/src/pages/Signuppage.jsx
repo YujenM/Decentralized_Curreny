@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect} from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import "../Css/LoginSignup.css";
 import logo from "../Images/logo.png";
@@ -12,6 +12,12 @@ function Signuppage() {
   const [signup, setSignup] = useState({ username: '', email: '', password: '' });
   const [passwordVisible, setPasswordVisible] = useState(false);
   const navigate = useNavigate();
+  useEffect(() => {
+    const authToken = localStorage.getItem("authtoken");
+    if (authToken) {
+      navigate("/dashboard");
+    }
+  }, [navigate]);
 
   const onChange = (e) => {
     setSignup({ ...signup, [e.target.name]: e.target.value });

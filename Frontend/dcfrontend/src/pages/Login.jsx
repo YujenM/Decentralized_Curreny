@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import { Link, useLocation } from "react-router-dom";
 import "../Css/LoginSignup.css";
@@ -12,8 +12,14 @@ function Login() {
   const location = useLocation();
   const [login, setLogin] = useState({ username: "", email: "", password: "" });
   const [passwordVisible, setPasswordVisible] = useState(false);
-
   const navigate = useNavigate();
+  useEffect(() => {
+    const authToken = localStorage.getItem("authtoken");
+    if (authToken) {
+      navigate("/dashboard");
+    }
+  }, [navigate]);
+
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);

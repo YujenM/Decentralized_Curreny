@@ -1,8 +1,16 @@
-import React from 'react'
+import React, { useEffect} from "react";
 import { Link } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 import '../Css/Authentication.css'
 import logo from '../Images/logo.png'
 function Intropage() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const authToken = localStorage.getItem("authtoken");
+    if (authToken) {
+      navigate("/dashboard");
+    }
+  }, [navigate]);
   return (
     <div className='maindiv '>
       <div className="grid grid-cols-2 gap-5">
