@@ -12,32 +12,31 @@ const pool = mysql.createPool({
 const connection = (callback) => {
     pool.getConnection((err, connection) => {
         if (err) {
-            return callback("Connection error: " + err.message);
+            callback(err);
+        } else {
+            connection.query('SELECT 1', (err) => {
+                connection.release();
+                callback(err ? err : null);
+            });
         }
-        connection.query('SELECT 1', (err) => {
-            connection.release();
-            if (err) {
-                return callback("Query error: " + err.message);
-            }
-            return callback(null, connection);
-        });
     });
 };
 
-const getquery = (query, params, callback) => {
-    pool.getConnection((err, connection) => {
-        if (err) {
-            return callback("Connection error: " + err.message);
-        }
-
-        connection.query(query, params, (err, result) => {
-            connection.release();
-
+const getquery = (query, params) => {
+    return new Promise((resolve, reject) => {
+        pool.getConnection((err, connection) => {
             if (err) {
-                return callback("Query error: " + err.message);
-            } else {
-                return callback(null, result);
+                return reject(err);
             }
+
+            connection.query(query, params, (err, result) => {
+                connection.release();
+                if (err) {
+                    return reject(err);
+                } else {
+                    return resolve(result);
+                }
+            });
         });
     });
 };
