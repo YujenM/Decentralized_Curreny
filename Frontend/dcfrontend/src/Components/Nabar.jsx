@@ -27,7 +27,7 @@ const Navbar = () => {
 
     useEffect(() => {
         getUser(); // Fetch user data when the component mounts
-    }, []);
+    }, [getUser]);// eslint-disable-next-line 
 
     const showSidebar = () => setSidebar(!sidebar);
 
@@ -35,6 +35,11 @@ const Navbar = () => {
         localStorage.clear();
         window.location.href = '/';
     };
+    const getfirstname=(username)=>{
+        if(username){
+            return username.split(' ')[0];
+        }
+    }
 
     return (
         <div>
@@ -50,7 +55,7 @@ const Navbar = () => {
                 </div>
                 {window.innerWidth >= 900 && (
                     <div className="user-container mr-3">
-                        <p className="mr-4 text-2xl username">Welcome {state.username || 'User'}</p>
+                        <p className="mr-4 text-2xl username">Welcome {getfirstname(state.username )|| 'User'}</p>
                         <FontAwesomeIcon icon={icon.faUser} size="xl" />
                     </div>
                 )}
@@ -69,7 +74,7 @@ const Navbar = () => {
                 </div>
                 {window.innerWidth < 900 && (
                     <div className="user-container-vertical">
-                        <p className="text-2xl username">Welcome <br/>{state.username || 'User'}</p>   
+                        <p className="text-2xl username">Welcome {getfirstname(state.username )|| 'User'}</p>   
                     </div>
                 )}
                 <ul className="nav-menu-items">
