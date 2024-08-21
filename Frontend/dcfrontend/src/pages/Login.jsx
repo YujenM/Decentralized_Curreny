@@ -58,10 +58,10 @@ function Login() {
       }
     } catch (error) {
       console.error("Error during login:", error);
-      alert("Error during login");
+      alert("Error without login");
     }
   };
-
+ 
   const onChange = (e) => {
     setLogin({
       ...login,

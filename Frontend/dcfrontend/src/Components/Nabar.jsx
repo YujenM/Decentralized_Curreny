@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as icon from '@fortawesome/free-solid-svg-icons';
 import { Link, useLocation } from 'react-router-dom';
 import { Navbaritems } from '../Components/Navbaritems';
 import logo from '../Images/logo.png';
 import '../Css/Nav.css';
+import UserContext from '../Context/User/Usercontext';
 
-const Navbar = (props) => {
+const Navbar = () => {
+    const { state, getUser } = useContext(UserContext); 
     const [sidebar, setSidebar] = useState(false);
     const location = useLocation();
-
-    const showSidebar = () => setSidebar(!sidebar);
 
     useEffect(() => {
         const handleResize = () => {
@@ -24,6 +24,12 @@ const Navbar = (props) => {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+    useEffect(() => {
+        getUser(); // Fetch user data when the component mounts
+    }, []);
+
+    const showSidebar = () => setSidebar(!sidebar);
 
     const getLogout = () => {
         localStorage.clear();
@@ -44,7 +50,7 @@ const Navbar = (props) => {
                 </div>
                 {window.innerWidth >= 900 && (
                     <div className="user-container mr-3">
-                        <p className="mr-4 text-2xl username">Welcome {props.username}</p>
+                        <p className="mr-4 text-2xl username">Welcome {state.username || 'User'}</p>
                         <FontAwesomeIcon icon={icon.faUser} size="xl" />
                     </div>
                 )}
@@ -63,7 +69,7 @@ const Navbar = (props) => {
                 </div>
                 {window.innerWidth < 900 && (
                     <div className="user-container-vertical">
-                        <p className="text-2xl username">Welcome {props.username}</p>   
+                        <p className="text-2xl username">Welcome <br/>{state.username || 'User'}</p>   
                     </div>
                 )}
                 <ul className="nav-menu-items">

@@ -11,6 +11,8 @@ import Signuppage from './pages/Signuppage';
 import Navbar from './Components/Nabar';
 import Dashboard from './pages/Dashboard';
 import ProtectedRoutes from './Components/ProtectedRoutes';
+import UserState from './Context/User/Userstate';
+
 function App() {
   const DisplayNavbar = () => {
     const location = useLocation();
@@ -24,19 +26,24 @@ function App() {
   };
   return (
     <div className="App">
-      <Router>
-        <DisplayNavbar/>
-        <Routes>
-          <Route exact path='/' element={<Intropage/>}/>
-          <Route exact path='/Login' element={<Login/>}/>
-          <Route exact path='/Signup' element={<Signuppage/>}/>
-          <Route exact path='/Dashboard' element={
-            <ProtectedRoutes>
-              <Dashboard/>
-            </ProtectedRoutes>
-          }/>
-        </Routes>
-      </Router>
+      <UserState>
+        <Router>
+              <DisplayNavbar/>
+              <Routes>
+                <Route exact path='/' element={<Intropage/>}/>
+                <Route exact path='/Login' element={<Login/>}/>
+                <Route exact path='/Signup' element={<Signuppage/>}/>
+                <Route exact path='/Dashboard' element={
+                  <ProtectedRoutes>
+                    <Dashboard/>
+                  </ProtectedRoutes>
+                }/>
+              </Routes>
+          </Router>
+      </UserState>
+      
+    
+      
 
     </div>
   );
