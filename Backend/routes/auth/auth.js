@@ -105,8 +105,8 @@ router.post('/userlogin', [
         if (!isMatch) {
             return res.status(401).json({ error: 'Invalid credentials' });
         }
-
-        const token = jwt.sign({ user_id: results[0].user_id }, JWT_Secret_key, { expiresIn: '1h' });
+        
+        const token = jwt.sign({ user_id: results[0].user_id }, JWT_Secret_key);
         success = true;
         res.json({ message: 'Login successful', token, success });
         
