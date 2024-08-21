@@ -1,10 +1,14 @@
 import { useState } from "react";
 import UserContext from "./Usercontext";
 
+
+
 const UserState = (props) => {
+    
     const host = "http://localhost:2000";
     const UserInitial = [];
     const [state, setState] = useState(UserInitial);
+    
 
     // Get user
     const getUser = async () => {
@@ -12,7 +16,6 @@ const UserState = (props) => {
         
         if (!authToken) {
             console.log("No token found. Redirecting to login.");
-            // navigate('/login');
             return;
         }
     
@@ -30,14 +33,12 @@ const UserState = (props) => {
             }
     
             const json = await response.json();
-            console.log(json);
             setState(json);
         } catch (err) {
             console.log("Error: " + err.message);
             if (err.message.includes("401")) {
                 alert("Session expired, please log in again.");
                 console.log(authToken)
-                // navigate('/login');
             }
         }
     };
