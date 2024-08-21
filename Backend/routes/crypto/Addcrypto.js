@@ -41,25 +41,26 @@ router.post('/upload', uploadImage, async (req, res) => {
         }
 
         // Upload file to Cloudinary
-        const stream = cloudinary.uploader.upload_stream(
-            { folder: "CryptoLogo" },
-            async (error, result) => {
-                if (error) {
-                    return res.status(500).json({ error: error.message });
+        const result = await new Promise((resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream(
+                { folder: "CryptoLogo" },
+                (error, result) => {
+                    if (error) {
+                        reject(new Error(error.message));
+                    } else {
+                        resolve(result);
+                    }
                 }
-                // Insert into the database
-                try {
-                    await db.getquery(
-                        'INSERT INTO Cryptocurrencies (name, symbol, created_at) VALUES (?, ?, ?)',
-                        [name, result.secure_url, new Date()]
-                    );
-                    res.redirect('/');
-                } catch (err) {
-                    res.status(500).json({ error: err.message });
-                }
-            }
+            );
+            stream.end(file.buffer);
+        });
+
+        // Insert into the database
+        await db.getquery(
+            'INSERT INTO Cryptocurrencies (name, symbol, created_at) VALUES (?, ?, ?)',
+            [name, result.secure_url, new Date()]
         );
-        stream.end(file.buffer);
+        res.redirect('/');
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }
@@ -69,7 +70,7 @@ router.get('/getCryptos', async (req, res) => {
     try {
         const query = 'SELECT * FROM Cryptocurrencies';
         const results = await db.getquery(query);
-    res.status(200).json(results);
+        res.status(200).json(results);
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Server error' });
