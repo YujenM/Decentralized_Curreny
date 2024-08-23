@@ -8,7 +8,7 @@ import * as icon from "@fortawesome/free-solid-svg-icons";
 import google from "../Images/Google.png";
 import facebook from "../Images/Facebook.png";
 
-function Login() {
+function Login(props) {
   const location = useLocation();
   const [login, setLogin] = useState({ username: "", email: "", password: "" });
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -30,7 +30,7 @@ function Login() {
     const trimmedUsername = login.username.trim();
     const trimmedPassword = login.password.trim();
     if (trimmedUsername === "" || trimmedPassword === "") {
-      alert("Username and password are required");
+      props.Displayalert("Please fill in all fields", "red", "faExclamation");
       return;
     }
     try {
@@ -49,12 +49,12 @@ function Login() {
       if (json.success) {
         localStorage.setItem("authtoken", json.token); 
         console.log("Login success");
-        alert("Login success");
         setLogin({ username: "", email: "", password: "" });
         navigate("/dashboard");
+        props.Displayalert("Login successful!", "green", "faCheck");
       } else {
         console.log("Login failed:", json.message);
-        alert("Login failed");
+        props.Displayalert("Invalid Credentials", "red", "faExclamation");
       }
     } catch (error) {
       console.error("Error during login:", error);
@@ -99,7 +99,7 @@ function Login() {
           <form onSubmit={handlesubmit}>
             <div className="username">
               <label htmlFor="username" className="labels">
-                <FontAwesomeIcon className="mr-2" icon={icon.faUser} />
+                <FontAwesomeIcon className="mr-2 " icon={icon.faUser} />
                 Username / Email
               </label>{" "}
               <br />
@@ -126,7 +126,7 @@ function Login() {
                 className="w-full px-4 mt-2 py-2 border rounded-lg focus:outline-none"
                 placeholder="Enter your password"
               />
-              <span
+              <span 
                 className="absolute inset-y-8 right-0 flex items-center px-3 cursor-pointer mt-5"
                 onClick={togglePasswordVisibility}
               >
