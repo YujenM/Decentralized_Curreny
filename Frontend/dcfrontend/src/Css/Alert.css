@@ -1,0 +1,72 @@
+.Alertbox{
+    position: fixed;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    bottom: 90px;
+    right: 20px;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+    }
+
+
+    @keyframes slideOut {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(100%);
+    }
+}
+
+.alert{
+    background: linear-gradient(90deg, #2c2c2c, #806A6A);
+    width:300px;
+    padding: 15px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    animation: slideIn 0.5s ease-in-out;
+
+}
+.icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height:50px;
+    border-radius: 20px;
+}
+
+span{
+    color: white;
+}
+.fonticon {
+    color: white;
+    font-size: 16px; /* Adjust this value to decrease the icon size */
+}
+
+.alert-close {
+    animation: slideOut 0.5s ease-in-out; 
+}
+
+@media (max-width:400px) {
+    .alert{
+        width:300px;
+    }
+    .icon{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50px;
+        height: 40px;
+        border-radius: 20px;
+    }
+}
