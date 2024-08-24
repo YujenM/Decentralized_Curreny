@@ -34,19 +34,21 @@ function Login(props) {
       return;
     }
     try {
-      const response = await fetch("http://localhost:2000/api/auth/userlogin", {
+      const response = await fetch("http://localhost:5000/v1/user/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
         body: JSON.stringify({
-          identifier: trimmedUsername,
+          email: trimmedUsername,
           password: trimmedPassword,
         }),
       });
       const json = await response.json();
-      if (json.success) {
+      console.log(json)
+      if (json.message === "success") {
+        console.log("json.===", json.token)
         localStorage.setItem("authtoken", json.token); 
         console.log("Login success");
         setLogin({ username: "", email: "", password: "" });
