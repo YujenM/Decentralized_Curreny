@@ -29,29 +29,31 @@ function Login(props) {
     e.preventDefault();
     const trimmedUsername = login.username.trim();
     const trimmedPassword = login.password.trim();
+
     if (trimmedUsername === "" || trimmedPassword === "") {
       props.Displayalert("Please fill in all fields", "red", "faExclamation");
       return;
     }
+
     try {
-      const response = await fetch("http://localhost:5000/v1/user/login", {
+      const response = await fetch("http://localhost:2000/api/auth/userlogin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Accept: "application/json",
         },
         body: JSON.stringify({
-          email: trimmedUsername,
+          identifier: trimmedUsername,
           password: trimmedPassword,
         }),
       });
+
       const json = await response.json();
-      console.log(json)
-      if (json.message === "success") {
-        console.log("json.===", json.token)
-        localStorage.setItem("authtoken", json.token); 
+      console.log(json);
+
+      if (json.success) {
+        localStorage.setItem("authtoken", json.token);
         console.log("Login success");
-        setLogin({ username: "", email: "", password: "" });
+        setLogin({ username: "", password: "" });
         navigate("/dashboard");
         props.Displayalert("Login successful!", "green", "faCheck");
       } else {
@@ -60,7 +62,7 @@ function Login(props) {
       }
     } catch (error) {
       console.error("Error during login:", error);
-      alert("Error without login");
+      props.Displayalert("Error during login", "red", "faExclamation");
     }
   };
  
