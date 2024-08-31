@@ -27,6 +27,8 @@ app.get('/', (_req, res) => {
   });
 });
 
+app.use('/api/login',require('./routes/userlogin'))
+
 app.use((req, res, next) => {
   let token = req.headers['x-access-token'] || req.headers.authorization; // Express headers are auto converted to lowercase
   if (token && token.startsWith('Bearer ')) {
