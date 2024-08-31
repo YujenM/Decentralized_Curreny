@@ -1,4 +1,4 @@
-require("dotenv").config({ path: "" });
+require("dotenv").config();
 
 module.exports = {
   development: {
