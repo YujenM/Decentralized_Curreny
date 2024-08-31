@@ -1,0 +1,34 @@
+{
+	"folders": [
+		{
+			"path": "../../../Notebook"
+		},
+		{
+			"path": "../../../DiyaFrontend"
+		},
+		{
+			"path": "../../../Chrome-extensions/GoogleMapExtension"
+		},
+		{
+			"path": "../../../PortfolioReact"
+		},
+		{
+			"path": "../../../FastApi"
+		},
+		{
+			"path": "../../../FYP-backend"
+		},
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../../Sem-8/Web-development"
+		},
+		{
+			"path": "../../../checkfyp/capstoneprojectcode"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Web-development"
+	}
+}
