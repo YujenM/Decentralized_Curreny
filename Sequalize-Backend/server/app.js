@@ -26,32 +26,32 @@ app.get('/', (_req, res) => {
     },
   });
 });
+app.use('/api/signup',require('./routes/usersignup/signup'))
+app.use('/api/login',require('./routes/userlogin/userlogin'))
 
-app.use('/api/login',require('./routes/userlogin'))
-
-app.use((req, res, next) => {
-  let token = req.headers['x-access-token'] || req.headers.authorization; // Express headers are auto converted to lowercase
-  if (token && token.startsWith('Bearer ')) {
-    token = token.slice(7, token.length);
-  }
-  if (token) {
-    jwt.verify(token, process.env.SECRET, (err, decoded) => {
-      if (err) {
-        res.status(403).json({
-          success: false,
-          message: 'Token is not valid',
-        });
-      } else {
-        req.decoded = decoded;
-        next();
-      }
-    });
-  } else {
-    res.status(403).json({
-      error: 'Auth Token is not supplied',
-    });
-  }
-});
+// app.use((req, res, next) => {
+//   let token = req.headers['x-access-token'] || req.headers.authorization; // Express headers are auto converted to lowercase
+//   if (token && token.startsWith('Bearer ')) {
+//     token = token.slice(7, token.length);
+//   }
+//   if (token) {
+//     jwt.verify(token, process.env.SECRET, (err, decoded) => {
+//       if (err) {
+//         res.status(403).json({
+//           success: false,
+//           message: 'Token is not valid',
+//         });
+//       } else {
+//         req.decoded = decoded;
+//         next();
+//       }
+//     });
+//   } else {
+//     res.status(403).json({
+//       error: 'Auth Token is not supplied',
+//     });
+//   }
+// });
 
 /**
  * * Error Handler. Provides full stack - disabled from production
@@ -73,5 +73,5 @@ app.use((err, _req, res, next) => {
 
 app.listen(app.get('port'), () => {
   // eslint-disable-next-line no-console
-  console.log(`listening on *:${app.get('port')} in ${app.get('env')} mode`);
+  console.log(`listening on:${app.get('port')} in ${app.get('env')} mode`);
 });

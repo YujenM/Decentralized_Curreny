@@ -30,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'User',
+    tableName: 'users',
     hooks: {
       beforeCreate: (u) => {
         const salt = bcrypt.genSaltSync(8);
