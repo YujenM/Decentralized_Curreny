@@ -26,7 +26,7 @@ module.exports = async (req, res, next) => {
         });
 
     } catch (err) {
-        console.error('APIERROR', err.message); // Log the specific error message
+        console.error('APIERROR', err.message); 
         res.status(httpstatus.INTERNAL_SERVER_ERROR).json({
             message: err.message || 'Internal server error',
         });
