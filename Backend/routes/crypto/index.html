@@ -29,6 +29,9 @@
         <label for="name">Cryptocurrency Name:</label>
         <input type="text" id="name" name="name" required>
         <br><br>
+        <label for="symbol">Cryptocurrency Symbol:</label>
+        <input type="text" id="symbol" name="symbol" required>
+        <br><br>
         <label for="image">Upload Image:</label>
         <input type="file" id="image" name="image" accept="image/*" required>
         <br><br>
@@ -52,14 +55,18 @@
                         card.className = 'crypto-card';
 
                         const img = document.createElement('img');
-                        img.src = crypto.symbol;  // Directly using the URL from the `symbol` field
+                        img.src = crypto.image;  // Updated to use `image` field
                         img.alt = crypto.name;
 
                         const name = document.createElement('p');
                         name.textContent = crypto.name;
 
+                        const symbol = document.createElement('p');
+                        symbol.textContent = `Symbol: ${crypto.symbol}`;
+
                         card.appendChild(img);
                         card.appendChild(name);
+                        card.appendChild(symbol);
                         container.appendChild(card);
                     });
                 })
