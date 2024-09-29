@@ -55,7 +55,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/api/getuser',require('./routes/getuser/getuser'))
-
+app.use('/api/Addcrypto',require('./routes/Addcrypto/addcrypto'))
 
 /**
  * * Error Handler. Provides full stack - disabled from production
