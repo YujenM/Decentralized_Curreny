@@ -67,7 +67,6 @@ router.post('/upload', uploadImage, async (req, res) => {
             [name, symbol, result.secure_url, new Date()] // Use Cloudinary URL for image
         );
 
-        res.redirect('/');
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }
