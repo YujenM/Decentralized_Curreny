@@ -18,6 +18,9 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const JWT_Secret_key = process.env.SECRET_KEY;
 
+const {userlogin}=require('../../Services/authentication/Login');
+const {userSignup}=require('../../Services/authentication/Signup');
+
 // testing route
 router.get('/test', (req, res) => {
     res.send('Hello World');
@@ -42,23 +45,8 @@ router.post('/usersignup', [
     }
     try {
         const { username, email, password } = req.body;
-        const checkemailquery = 'SELECT * FROM Users WHERE email = ?';
-        const results = await db.getquery(checkemailquery, [email]);
-        
-        if (results.length > 0) {
-            return res.status(400).json({
-                error: "Email Already exists in Database"
-            });
-        } else {
-            const salt = bcrypt.genSaltSync(10);
-            const hashedpassword = bcrypt.hashSync(password, salt);
-            const AddUserQuery = 'INSERT INTO Users (username, email, password_hash) VALUES (?, ?, ?)';
-            const result = await db.getquery(AddUserQuery, [username, email, hashedpassword]);
-
-            const token = jwt.sign({ user_id: result.insertId, email }, JWT_Secret_key);
-            success = true;
-            res.json({ success, token });
-        }
+        const result = await userSignup(username, email, password);
+        res.json(result);
     } catch (err) {
         console.error("Server error: ", err);
         return res.status(500).json({
@@ -70,10 +58,9 @@ router.post('/usersignup', [
 
 // login route
 router.post('/userlogin', [
-    body('identifier').isLength({ min: 2 }).withMessage('Identifier must be at least 4 characters long'),
-    body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters long')
+    body('identifier').isLength({ min: 2 }),
+    body('password').isLength({ min: 8 })
 ], async (req, res) => {
-    let success = false;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({
@@ -84,55 +71,35 @@ router.post('/userlogin', [
     const { identifier, password } = req.body;
 
     try {
-        let loginquery;
-        let params;
-
-        if (identifier.includes('@')) {
-            loginquery = "SELECT user_id, password_hash FROM Users WHERE email = ?";
-            params = [identifier];
-        } else {
-            loginquery = "SELECT user_id, password_hash FROM Users WHERE username = ?";
-            params = [identifier];
-        }
-
-        const results = await db.getquery(loginquery, params);
-
-        if (results.length === 0) {
-            return res.status(401).json({ error: 'Invalid credentials' });
-        }
-        
-        const isMatch = await bcrypt.compare(password, results[0].password_hash);
-        if (!isMatch) {
-            return res.status(401).json({ error: 'Invalid credentials' });
-        }
-        
-        const token = jwt.sign({ user_id: results[0].user_id }, JWT_Secret_key);
-        success = true;
-        res.json({ message: 'Login successful', token, success });
-        
+        const { token, user_id } = await userlogin(identifier, password);
+        res.json({ message: 'Login successful', token, user_id, success: true });
     } catch (error) {
-        console.error("Server error: ", error);
-        res.status(500).json({ error: 'Server error' });
+        console.error("Server error: ", error.message);
+        res.status(401).json({ error: error.message });
     }
 });
 
 // get login user
-router.post('/getuser', fetchusers, async (req, res) => {
+router.get('/getuser', fetchusers, async (req, res) => {
     try {
-        const userid = req.user.user_id;
-        const userQuery = 'SELECT user_id, username, email, created_at FROM Users WHERE user_id = ?';
-        const results = await db.getquery(userQuery, [userid]);
+        const userId = req.user.User_ID;
+        const getUserQuery = 'SELECT User_ID, User_Name, User_Email, created_at FROM Users WHERE User_ID = ?';
+        const userData = await db.getquery(getUserQuery, [userId]);
 
-        if (results.length === 0) {
+        if (userData.length === 0) {
             return res.status(404).json({ error: "User not found" });
         }
-        res.json(results[0]);
-        
+
+        res.status(200).json({
+            success: true,
+            user: userData[0]
+        });
     } catch (err) {
         console.error("Server error: ", err);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
+
 
 
 //update and Forget  password
@@ -151,7 +118,7 @@ router.post('/updatepassword', fetchusers, [
     const { oldpassword, newpassword } = req.body;
     try {
         const userid = req.user.user_id;
-        const userQuery = 'SELECT password_hash FROM Users WHERE user_id = ?';
+        const userQuery = 'SELECT User_Password FROM Users WHERE User_ID = ?';
         const results = await db.getquery(userQuery, [userid]);
 
         if (!results || results.length === 0) {

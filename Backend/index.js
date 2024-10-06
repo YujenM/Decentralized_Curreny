@@ -25,11 +25,19 @@ app.use(express.json());
 const authRoutes = require('./routes/auth/auth');
 const cryptoRoutes = require('./routes/crypto/Addcrypto');
 const getcryptoprice=require('./routes/getcryptoprice/getcryptoprice');
+const getdecentralizedata=require('./routes/getdecentralizedata/prediction');
+const coincryptoadd = require('./routes/crypto/coincrypto');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/crypto', cryptoRoutes);
 
 app.use('/api/getcryptoprice',getcryptoprice);
+app.use('/api/getdata',getdecentralizedata);
+
+app.use('/api/coincrypto', coincryptoadd);
+
+const coincryptoprice=require('./routes/crypto/coincryptoprice');
+app.use('/api/getcoincryptoprice',coincryptoprice)
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);

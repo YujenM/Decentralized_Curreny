@@ -45,7 +45,7 @@ const fetchDecentralizedCurrency = async (req, res, next) => {
                 }
 
                 const cryptoId = cryptoResult[0].crypto_id;
-                let insertedData = 0; // Track how many rows inserted
+                let insertedData = 0; 
 
                 for (let price of priceData) {
                     if (price.open && price.close && price.high && price.low && price.volume && price.time) {
@@ -64,7 +64,7 @@ const fetchDecentralizedCurrency = async (req, res, next) => {
                                 price.volume,
                                 timestamp
                             ]);
-                            insertedData++; // Increment inserted data count
+                            insertedData++; 
                         } else {
                             console.log(`Duplicate entry found for ${decentralizedCurrency} at timestamp: ${timestamp}`);
                         }
@@ -134,7 +134,7 @@ router.get('/calculate-percentage-change/:symbol', async (req, res, next) => {
             JOIN Cryptocurrencies c ON p.crypto_id = c.crypto_id
             WHERE c.symbol = ?
             ORDER BY p.timestamp DESC
-            LIMIT 1;  -- Get the latest price entry
+            LIMIT 1;  
         `;
 
         const result = await db.getquery(fetchQuery, [symbol]);
@@ -150,7 +150,7 @@ router.get('/calculate-percentage-change/:symbol', async (req, res, next) => {
             symbol,
             open,
             close,
-            percentageChange: percentageChange.toFixed(2), // format to 2 decimal places
+            percentageChange: percentageChange.toFixed(2), 
         });
     } catch (err) {
         console.log(`Error occurred: ${err.message}`);
