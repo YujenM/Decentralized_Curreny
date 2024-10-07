@@ -24,8 +24,8 @@ const fetchCryptoData = async (uuid, timePeriod) => {
     } catch (error) {
         if (error.response && error.response.status === 429) {
             console.log(`Rate limit hit, sleeping for 1 second...`);
-            await sleep(1000); // Sleep for 1 second when rate-limited
-            return await fetchCryptoData(uuid, timePeriod); // Retry after sleeping
+            await sleep(1000); 
+            return await fetchCryptoData(uuid, timePeriod);
         } else if (error.response && error.response.status === 422) {
             throw new Error(`Invalid data for UUID: ${uuid}, timePeriod: ${timePeriod}`);
         } else {
