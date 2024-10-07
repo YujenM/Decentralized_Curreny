@@ -1,6 +1,8 @@
 const express = require('express');
 const router=express.Router();
 const cryptocoinservice=require('../../Services/coinapiprice/coinapiprice')
+const analysisdataservice=require('../../Services/Crypto/analysiscryptodata')
+const tabledataservices=require('../../Services/Crypto/tabledata');
 
 router.get('/',(req,res)=>{
     res.send("Hello from getcoincryptoprice");
@@ -18,4 +20,6 @@ router.post('/addcryptos', async (req, res, next) => {
     }
 });
 
+router.get('/getanalysiscryptodata/:id',analysisdataservice.getanalysiscryptodata);
+router.get('/alltabledata',tabledataservices.fetchtabledata);
 module.exports=router;

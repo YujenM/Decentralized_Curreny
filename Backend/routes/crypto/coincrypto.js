@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const cryptoService = require('../../Services/Crypto/getcrypto');
-
+const analysisdata=require('../../Services/Crypto/analysisdata')
 router.get('/',(req,res)=>{
     res.send("Hello from coincrypto");
 })
@@ -18,5 +18,7 @@ router.post('/addcryptos', async (req, res, next) => {
         next(error);
     }
 });
+
+router.get('/getanalysisdata',analysisdata.fectchanalysisdata)
 
 module.exports = router;
