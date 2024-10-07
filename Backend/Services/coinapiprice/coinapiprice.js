@@ -29,8 +29,8 @@ const fetchCryptoData = async (uuid, timePeriod) => {
     } catch (error) {
         if (error.response && error.response.status === 429) {
             console.log(`Rate limit hit, sleeping for 1 second...`);
-            await sleep(1000); // Sleep for 1 second when rate-limited
-            return await fetchCryptoData(uuid, timePeriod); // Retry after sleeping
+            await sleep(1000); 
+            return await fetchCryptoData(uuid, timePeriod);
         } else if (error.response && error.response.status === 422) {
             throw new Error(`Invalid data for UUID: ${uuid}, timePeriod: ${timePeriod}`);
         } else {
@@ -75,7 +75,7 @@ const insertCryptoPriceData = async (coinData, timePeriod) => {
     const marketCap = coinData.marketCap;
     const fullyDilutedMarketCap = coinData.fullyDilutedMarketCap;
     const change = coinData.change;
-    const sparkline = JSON.stringify(coinData.sparkline); // Convert Sparkline array to a JSON string
+    const sparkline = JSON.stringify(coinData.sparkline); 
 
     const insertQuery = `
         INSERT INTO Crypto_price (UUID, Cryptoprice_ID, Currency, timeInterval, numberofmarkets, numberofexchanges, 24HVolume, marketcap, Dmarketcap, Price, CryptoChange, Sparklingline)
@@ -94,7 +94,7 @@ const insertCryptoPriceData = async (coinData, timePeriod) => {
     `;
 
     const values = [
-        uuid, Cryptoprice_ID, coinData.symbol, timePeriod, numberOfMarkets, 
+        uuid, Cryptoprice_ID, 'USD', timePeriod, numberOfMarkets, 
         numberOfExchanges, volume24h, marketCap, fullyDilutedMarketCap, 
         price, change, sparkline
     ];
@@ -113,9 +113,9 @@ const fetchAllCryptoData = async (listOfUUID, timePeriods) => {
     for (let uuid of listOfUUID) {
         for (let timePeriod of timePeriods) {
             try {
-                await deletePreviousData(uuid, timePeriod); // Delete previous data for the UUID and time period
+                await deletePreviousData(uuid, timePeriod); 
                 const coinData = await fetchCryptoData(uuid, timePeriod);
-                await insertCryptoPriceData(coinData, timePeriod); // Pass timePeriod dynamically
+                await insertCryptoPriceData(coinData, timePeriod);
                 console.log(`Data for ${coinData.name} (${timePeriod}) inserted successfully`);
             } catch (error) {
                 console.error(`Error for UUID: ${uuid}, Time Period: ${timePeriod}: ${error.message}`);
