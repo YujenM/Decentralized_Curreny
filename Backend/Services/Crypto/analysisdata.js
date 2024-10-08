@@ -5,7 +5,7 @@ const fectchanalysisdata=async(req,res)=>{
         const analysisdataquerry='SELECT cc.UUID, cc.Crypto_Symbol, cc.Crypto_image FROM Crypto_Currencies cc';
         const analysisresult= await db.getquery(analysisdataquerry);
         // console.log(analysisresult);
-        res.send(analysisresult);
+        return res.send(analysisresult);
         console.log('Data fetched successfully');
 
     }catch(err){
