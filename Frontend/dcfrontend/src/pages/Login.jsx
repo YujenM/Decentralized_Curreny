@@ -31,7 +31,7 @@ function Login(props) {
     const trimmedPassword = login.password.trim();
 
     if (trimmedUsername === "" || trimmedPassword === "") {
-      props.Displayalert("Please fill in all fields", "red", "faExclamation");
+      props.Displayalert("Please fill in all fields", "Danger", "faExclamation");
       return;
     }
 
@@ -55,14 +55,14 @@ function Login(props) {
         console.log("Login success");
         setLogin({ username: "", password: "" });
         navigate("/dashboard");
-        props.Displayalert("Login successful!", "green", "faCheck");
+        props.Displayalert("Login successful!", "Check", "faCheck");
       } else {
         console.log("Login failed:", json.message);
-        props.Displayalert("Invalid Credentials", "red", "faExclamation");
+        props.Displayalert("Invalid Credentials", "Danger", "faExclamation");
       }
     } catch (error) {
       console.error("Error during login:", error);
-      props.Displayalert("Error during login", "red", "faExclamation");
+      props.Displayalert("Error during login", "Danger", "faExclamation");
     }
   };
  

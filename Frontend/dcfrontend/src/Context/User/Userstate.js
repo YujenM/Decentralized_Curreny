@@ -1,16 +1,10 @@
 import { useState } from "react";
 import UserContext from "./Usercontext";
 
-
-
 const UserState = (props) => {
-    
     const host = "http://localhost:2000";
-    const UserInitial = [];
-    const [state, setState] = useState(UserInitial);
+    const [state, setState] = useState(null);
     
-
-    // Get user
     const getUser = async () => {
         const authToken = localStorage.getItem('authtoken');
         
@@ -18,32 +12,31 @@ const UserState = (props) => {
             console.log("No token found. Redirecting to login.");
             return;
         }
-    
+        
         try {
             const response = await fetch(`${host}/api/auth/getuser`, {
-                method: 'POST',
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'auth-token': authToken
-                }
+                    'auth-token': authToken,
+                },
             });
     
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                const errorData = await response.json();
+                throw new Error(`HTTP error! status: ${response.status} - ${errorData.error}`);
             }
     
             const json = await response.json();
-            setState(json);
+            console.log(json); 
+            setState(json.user); 
         } catch (err) {
             console.log("Error: " + err.message);
             if (err.message.includes("401")) {
                 alert("Session expired, please log in again.");
-                console.log(authToken)
             }
         }
     };
-    
-    
 
     return (
         <UserContext.Provider value={{ state, getUser }}>

@@ -1,9 +1,13 @@
 import React from 'react'
+import '../Css/Dashboard.css'
+import Analysisdata from '../Components/Analysisdata';
 
 function Dashboard() {
   return (
-    <div>
-      <h1>Dashboard</h1>
+    <div className="dashboard-container">
+      <div className="dashboard-content">
+        <Analysisdata/>
+      </div>
     </div>
   )
 }

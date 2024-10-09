@@ -1,0 +1,91 @@
+:root {
+    --mainColor: #1A1A1D; 
+    --mainColorLight: #4E4E50; 
+    --secondaryColor: #6F2232; 
+    --textColor: #E5E5E5;
+    --optionColor: #EC1D24;
+    --activeColor: #7F00FF; 
+    --backgroundrgba: rgba(26, 26, 29, 1);
+    --heading-h1-font-size: 2.75rem;
+    --heading-h2-font-size: 2rem;
+    --heading-h3-font-size: 1.5rem;
+    --heading-h4-font-size: 1.125rem;
+    --heading-h5-font-size: 1rem;
+}
+.analysishead{
+    font-size: var(--heading-h2-font-size);
+    font-weight: bold;
+    color: var(--textColor);
+    margin: 0 2%;
+    width: 20%;
+    border-bottom: 2px solid var(--activeColor);
+
+}
+/* card */
+
+.Analysisdatacarmain {
+    margin: 20px;
+    padding: 20px;
+    width: 100%; /* Take full width of the container */
+    flex: 1 1 200px; /* Flex-grow, flex-shrink, and base width */
+    width: 10%;
+    min-width: 12vw; /* Prevent it from getting too narrow */
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.currencyimage {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.currencysymbol {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size: var(--heading-h3-font-size);
+    font-weight: bold;
+    color: var(--textColor);
+    cursor: pointer;
+}
+
+/* Responsive media queries */
+@media (max-width: 768px) {
+    .Analysisdatacarmain {
+        padding: 2% 2%;
+        /* background-color: #7F00FF; */
+        width: 15%;
+        
+    }
+}
+
+@media (max-width: 480px) {
+    .analysishead{
+        width: 90%;
+    }
+    .Analysisdatacarmain {
+        /* background-color: #7F00FF; */
+        margin: 5% 25%;
+        display: flex;
+        justify-content: center;
+        padding: 2% 2%;
+        width: 45%;
+        max-width: none; 
+    }
+}
+
+@media (max-width: 1024px) {
+    .analysishead {
+        font-size: calc(var(--heading-h2-font-size) - 4px);
+        width: 30%;
+    }
+}
+
+@media (max-width: 600px) {
+    .analysishead {
+        font-size: calc(var(--heading-h2-font-size) - 6px);
+        width: 50%;
+        margin: 0 5%;
+    }
+}
