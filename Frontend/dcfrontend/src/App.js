@@ -38,7 +38,7 @@ function App() {
 
     setTimeout(() => {
       setAlert(null);
-    }, 2000);
+    }, 5000);
   }
 
   return (
@@ -50,7 +50,7 @@ function App() {
           <Routes>
             <Route exact path='/' element={<Intropage />} />
             <Route exact path='/login' element={<Login Displayalert={Displayalert} />} />
-            <Route exact path='/signup' element={<Signuppage />} />
+            <Route exact path='/signup' element={<Signuppage Displayalert={Displayalert} />} />
             <Route exact path='/dashboard' element={
               <ProtectedRoutes>
                 <Dashboard />

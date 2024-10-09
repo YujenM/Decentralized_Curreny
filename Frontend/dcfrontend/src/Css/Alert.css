@@ -56,14 +56,14 @@ span{
 .alert-close {
     animation: slideOut 0.5s ease-in-out; 
 }
-.green{
+.Check{
     background-color: green;
 }
-.red{
+.Danger{
     background-color: red;
 }
-.yellow{
-    background-color: yellow;
+.Info{
+    background-color: blue;
 }
 
 @media (max-width:400px) {
