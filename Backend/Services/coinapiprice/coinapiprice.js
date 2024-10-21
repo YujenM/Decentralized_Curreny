@@ -59,7 +59,7 @@ const insertCryptoPriceData = async (coinData, timePeriod) => {
     let isUnique = false;
     while (!isUnique) {
         let randomnumber = randomnum();
-        Cryptoprice_ID = `MARK-${randomnumber}`;
+        Cryptoprice_ID = `MARK-CRYPTO-${randomnumber}`;
         const checkidquery = 'SELECT * FROM Crypto_price WHERE Cryptoprice_ID=? AND timeInterval=?';
         const checkidresults = await db.getquery(checkidquery, [Cryptoprice_ID, timePeriod]);
         if (checkidresults.length === 0) {

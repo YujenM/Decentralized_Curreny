@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext,useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as icon from '@fortawesome/free-solid-svg-icons';
 import { Link, useLocation } from 'react-router-dom';
@@ -11,6 +11,7 @@ const Navbar = () => {
     const { state, getUser } = useContext(UserContext); 
     const [sidebar, setSidebar] = useState(false);
     const location = useLocation();
+    const hasFetchedData = useRef(false);
 
     useEffect(() => {
         const handleResize = () => {
@@ -26,9 +27,14 @@ const Navbar = () => {
     }, []);
 
     useEffect(() => {
-        getUser(); 
+        if (!hasFetchedData.current) {
+            getUser();
+            hasFetchedData.current = true;
+        }
         // eslint-disable-next-line
-    }, []); 
+    }, [getUser]); 
+    // console.log("this navbar");
+    // console.log(state);
 
     const showSidebar = () => setSidebar(!sidebar);
 

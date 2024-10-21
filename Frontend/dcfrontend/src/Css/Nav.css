@@ -28,6 +28,7 @@ body {
     align-items: center;
     padding: 0 10px;
     position: relative;
+    
 }
 
 .menubars {
@@ -84,6 +85,8 @@ body {
     left: -100%;
     transition: 0.85s;
     padding-top: 20px;
+    z-index: 10;
+    
 }
 
 .nav-menu.active {
@@ -246,7 +249,7 @@ span {
     }
 
     .nav-menu {
-        width: 80vw;
+        width: 60vw;
     }
 
     .search-input {
@@ -255,8 +258,8 @@ span {
 }
 
 
-@media screen and (max-width: 841px) {
+/* @media screen and (max-width: 841px) {
     .nav-menu {
          width: 40vw;
     }
-}
+} */

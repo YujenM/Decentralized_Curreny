@@ -15,4 +15,4 @@ router.post('/addnews',NewsService.addNews);
 router.get('/getlatestnews/:limit',latestnewsservice.getLatestNews);
 router.get('/getnewsbyid/:id',newsbyid.getnewsbyid);
 
-module.exports=router;
+module.exports=router;  

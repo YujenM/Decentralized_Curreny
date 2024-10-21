@@ -12,7 +12,7 @@ router.post('/addcryptos', async (req, res, next) => {
         const timePeriods = ["24h"];
         
         await cryptoService.fetchAllCryptoData(listOfUUID, timePeriods);
-        res.status(200).send({ status: 'success', message: 'Crypto data inserted for all UUIDs and time periods' });
+        res.status(200).send({ status: 'success', message: 'Crypto data insertetd in database' });
     } catch (error) {
         res.status(500).send({ error: { message: error.message } });
         next(error);

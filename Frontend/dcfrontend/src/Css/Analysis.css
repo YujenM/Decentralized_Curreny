@@ -12,25 +12,38 @@
     --heading-h4-font-size: 1.125rem;
     --heading-h5-font-size: 1rem;
 }
-.analysishead{
+
+.analysis-data-container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+.analysishead {
     font-size: var(--heading-h2-font-size);
     font-weight: bold;
     color: var(--textColor);
-    margin: 0 2%;
-    width: 20%;
-    border-bottom: 2px solid var(--activeColor);
-
+    margin: 20px auto;
+    text-align: center;
+    width: fit-content;
+    border-bottom: 3px solid var(--activeColor);
+    padding-bottom: 10px;
+    z-index: 1;
+    position: relative;
+    line-height: 1.5;
 }
-/* card */
+
 
 .Analysisdatacarmain {
-    margin: 20px;
+    margin: 20px auto;
     padding: 20px;
-    width: 100%; /* Take full width of the container */
-    flex: 1 1 200px; /* Flex-grow, flex-shrink, and base width */
-    width: 10%;
-    min-width: 12vw; /* Prevent it from getting too narrow */
-    box-sizing: border-box; /* Include padding in width calculation */
+    width: 100%;
+    max-width: 12vw;
+    min-width: 12vw;
+    box-sizing: border-box;
+    z-index: 1;
+    position: relative;
 }
 
 .currencyimage {
@@ -50,42 +63,29 @@
     cursor: pointer;
 }
 
-/* Responsive media queries */
+.carousel-container {
+    display: flex;
+    /* justify-content: center; */
+    z-index: 1;
+    position: relative;
+}
+
 @media (max-width: 768px) {
     .Analysisdatacarmain {
-        padding: 2% 2%;
-        /* background-color: #7F00FF; */
         width: 15%;
-        
+        z-index: 1;
+        margin: 5% auto;
     }
 }
 
 @media (max-width: 480px) {
-    .analysishead{
-        width: 90%;
-    }
     .Analysisdatacarmain {
-        /* background-color: #7F00FF; */
-        margin: 5% 25%;
-        display: flex;
-        justify-content: center;
+        margin: 5% auto;
         padding: 2% 2%;
         width: 45%;
-        max-width: none; 
     }
 }
 
-@media (max-width: 1024px) {
-    .analysishead {
-        font-size: calc(var(--heading-h2-font-size) - 4px);
-        width: 30%;
-    }
-}
 
-@media (max-width: 600px) {
-    .analysishead {
-        font-size: calc(var(--heading-h2-font-size) - 6px);
-        width: 50%;
-        margin: 0 5%;
-    }
-}
+
+
