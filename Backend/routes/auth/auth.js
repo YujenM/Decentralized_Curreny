@@ -19,7 +19,7 @@ const jwt = require('jsonwebtoken');
 const JWT_Secret_key = process.env.SECRET_KEY;
 
 const {userlogin}=require('../../Services/authentication/Login');
-const {userSignup}=require('../../Services/authentication/Signup');
+const {validateSignup,userSignup}=require('../../Services/authentication/Signup');
 
 // testing route
 router.get('/test', (req, res) => {
@@ -28,30 +28,13 @@ router.get('/test', (req, res) => {
 
 // signup route
 
-router.post('/usersignup', [
-    body('username').isLength({ min: 4 }),
-    body('email').isEmail(),
-    body('password')
-        .isLength({ min: 8 }).withMessage('Password must be at least 8 characters long')
-        .matches(/[A-Z]/).withMessage('Password must contain at least one uppercase letter')
-        .matches(/[!@#$%^&*(),.?":{}|<>]/).withMessage('Password must contain at least one special character')
-], async (req, res) => {
-    let success = false;
-    const error = validationResult(req);
-    if (!error.isEmpty()) {
-        return res.status(400).json({
-            error: error.array()
-        });
-    }
+router.post('/usersignup', validateSignup, async (req, res) => {
     try {
         const { username, email, password } = req.body;
         const result = await userSignup(username, email, password);
         res.json(result);
     } catch (err) {
-        console.error("Server error: ", err);
-        return res.status(500).json({
-            error: "Server error"
-        });
+        res.status(500).json({ error: "Server error" });
     }
 });
 
