@@ -17,6 +17,7 @@ body {
     background: radial-gradient(circle at 20% 20%, var(--color1)  -20%, transparent 40%),
     radial-gradient(circle at 105% 40%, var(--color1) -25%, transparent 20%);
     background-color: var(--backgroundcolor); 
+    background-repeat: no-repeat;
 }
 
 @media (max-width: 900px) {
@@ -24,6 +25,7 @@ body {
         background: radial-gradient(circle at 5% 20%, var(--color1)  -20%, transparent 40%),
         radial-gradient(circle at 105% 90%, var(--color1) -15%, transparent 30%);
         background-color: var(--backgroundcolor);
+        background-repeat: no-repeat;
         font-family: "Urbanist", sans-serif;
     }
 }

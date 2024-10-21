@@ -12,9 +12,9 @@
     --hover: #FFA500;
     --secondarytextcolor: #333333;
 }
-body{
+/* body{
     overflow-y: hidden;
-}
+} */
 
 .loginpage{
     display: flex;

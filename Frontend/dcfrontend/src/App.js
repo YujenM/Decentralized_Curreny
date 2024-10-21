@@ -14,6 +14,7 @@ import ProtectedRoutes from './Components/ProtectedRoutes';
 import UserState from './Context/User/Userstate';
 import Alert from './Components/Alert';
 import { useState } from 'react';
+import Analysisdata from './pages/AnalysisDetails';
 
 const DisplayNavbar = () => {
   const location = useLocation();
@@ -54,6 +55,11 @@ function App() {
             <Route exact path='/dashboard' element={
               <ProtectedRoutes>
                 <Dashboard />
+              </ProtectedRoutes>
+            } />
+            <Route exact path='/dashboard/analysis' element={
+              <ProtectedRoutes>
+                <Analysisdata />
               </ProtectedRoutes>
             } />
           </Routes>
