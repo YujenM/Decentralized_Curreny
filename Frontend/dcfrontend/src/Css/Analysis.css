@@ -13,6 +13,7 @@
     --heading-h5-font-size: 1rem;
 }
 
+
 .analysis-data-container {
     max-width: 100%;
     margin: 0 auto;
@@ -70,12 +71,14 @@
     position: relative;
 }
 
+
 @media (max-width: 768px) {
     .Analysisdatacarmain {
         width: 15%;
         z-index: 1;
         margin: 5% auto;
     }
+    
 }
 
 @media (max-width: 480px) {

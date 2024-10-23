@@ -1,0 +1,62 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --text-color: #E6E6FA;
+    --header-bg-color: #1C1931;
+    --row-bg-color: #1C1931;
+    --row-border-color: #333333;
+    --hover-color: #FFA500;
+}
+
+
+
+.table-container {
+    width: 100%;
+    padding: 20px;
+}
+
+.crypto-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    color: var(--text-color);
+    font-family: Arial, sans-serif;
+}
+
+.crypto-table thead {
+    background-color: var(--header-bg-color);
+    color: var(--text-color);
+}
+
+.crypto-table th {
+    padding: 12px 15px;
+    text-align: left;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.crypto-table tbody tr {
+    background-color: var(--row-bg-color);
+    border-bottom: 1px solid var(--text-color);
+    border-top: 1px solid var(--text-color);
+}
+
+.crypto-table td {
+    padding: 12px 15px;
+    font-size: 16px;
+}
+
+.crypto-table tbody tr:hover {
+    background-color: var(--hover-color);
+    transition: 0.3s;
+}
+
+.crypto-table tbody tr td:first-child {
+    font-weight: 700;
+}
+
+

@@ -8,7 +8,7 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 function ChartCard({ cryptoName, price, percentageChange, sparklineData = [], iconUrl }) {
     const data = {
-        labels: sparklineData.map(() => ''),  // Empty labels for each data point
+        labels: sparklineData.map(() => ''), 
         datasets: [
             {
                 label: 'Price',
@@ -39,12 +39,13 @@ function ChartCard({ cryptoName, price, percentageChange, sparklineData = [], ic
                 <div className="card-header">
                     <div className="icon">
                         <img src={iconUrl} alt="crypto" />
+                        <p className="c_name ml-2">{cryptoName}</p>
                     </div>
                     <div className="info">
-                        <p className="c_name">{cryptoName}</p>
-                        <p className="c_price">${price}</p>
-                        <p className={`percentage ${percentageChange >= 0 ? 'positive' : 'negative'}`}>
-                            {percentageChange >= 0 ? '+' : ''}{percentageChange}(24h)
+                        
+                        <p className="c_price">${price} USD</p>
+                        <p className="percentage">
+                            {percentageChange} (24hVolume)
                         </p>
                     </div>
                 </div>

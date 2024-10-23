@@ -11,12 +11,12 @@ const responsive = {
       slidesToSlide: 3,
     },
     tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 3,
+      breakpoint: { max: 1024, min: 500 },
+      items: 2,
       slidesToSlide: 2,
     },
     mobile: {
-      breakpoint: { max: 464, min: 0 },
+      breakpoint: { max: 500, min: 0 },
       items: 1,
       slidesToSlide: 1,
     },
@@ -32,7 +32,6 @@ function Dashboardchart() {
             getchartdata();
         }
     }, [getchartdata]);
-    // console.log(chartdata.data.Sparklingline);
     return (
         <div className="dashboard-chart">
             {chartdata && chartdata.status === "success" && Array.isArray(chartdata.data) && (
@@ -41,7 +40,7 @@ function Dashboardchart() {
                     {chartdata.data.map(crypto => (
                         <div key={crypto.Crypto_Name}>
                             <ChartCard
-                                cryptoName={crypto.Crypto_Name}
+                                cryptoName={crypto.Crypto_Symbol}
                                 price={crypto.Price.slice(0, 4)}
                                 percentageChange={crypto["24HVolume"].slice(0,4)}
                                 sparklineData={crypto.Sparklingline ? crypto.Sparklingline.slice(0, 4) : []}  // Check if Sparkline exists
