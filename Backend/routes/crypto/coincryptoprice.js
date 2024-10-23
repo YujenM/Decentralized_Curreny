@@ -22,6 +22,6 @@ router.post('/addcryptos', async (req, res, next) => {
 });
 
 router.get('/getanalysiscryptodata/:id',analysisdataservice.getanalysiscryptodata);
-router.get('/alltabledata',tabledataservices.fetchtabledata);
+router.get('/alltabledata',tabledataservices.fetchtablgit edata);
 router.get('/allcurrencychartdata',allcurrencychart.fetchallcurrencychart);
 module.exports=router;
