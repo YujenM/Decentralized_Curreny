@@ -26,7 +26,7 @@ function AnalysisDetails() {
   }
 
   return (
-    <div className='container'>
+    <div className='container analysisbg'>
       <div className='backbtn'>
         <button onClick={handlebackclick}><FontAwesomeIcon icon={icon.faArrowLeft} /></button>
       </div>

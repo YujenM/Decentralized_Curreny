@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useRef, useState } from 'react';
+import React, { useEffect, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Css/Analysis.css';
 import Analysisdatacar from '../Components/Analysisdatacar';
@@ -13,12 +13,12 @@ const responsive = {
     slidesToSlide: 3,
   },
   tablet: {
-    breakpoint: { max: 1024, min: 464 },
+    breakpoint: { max: 1024, min:500 },
     items: 3,
     slidesToSlide: 2,
   },
   mobile: {
-    breakpoint: { max: 464, min: 0 },
+    breakpoint: { max: 500, min: 0 },
     items: 1,
     slidesToSlide: 1,
   },
@@ -27,7 +27,6 @@ const responsive = {
 function Analysisdata() {
   const { analysisData, getanalysisdata } = useContext(UserContext);
   const hasFetchedData = useRef(false);
-  const [selectedUUID, setSelectedUUID] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,12 +39,11 @@ function Analysisdata() {
   
 
   const handleSymbolClick = (uuid) => {
-    setSelectedUUID(uuid);
     navigate('/dashboard/analysis', { state: { uuid } }); 
   };
 
   return (
-    <div>
+    <div className='analysisbg'>
       <h1 className='analysishead'>Analysis Data</h1>
       {analysisData && analysisData.length > 0 ? (
         <Carousel

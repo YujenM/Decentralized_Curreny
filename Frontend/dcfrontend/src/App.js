@@ -12,9 +12,11 @@ import Navbar from './Components/Nabar';
 import Dashboard from './pages/Dashboard';
 import ProtectedRoutes from './Components/ProtectedRoutes';
 import UserState from './Context/User/Userstate';
+import NewsState from './Context/news/NewsState';
 import Alert from './Components/Alert';
 import { useState } from 'react';
 import Analysisdata from './pages/AnalysisDetails';
+import Detailenews from './pages/Detailenews';
 
 const DisplayNavbar = () => {
   const location = useLocation();
@@ -45,7 +47,8 @@ function App() {
   return (
     <div className="App">
       <UserState>
-        <Router>
+      <NewsState>
+      <Router>
           <DisplayNavbar />
           {alert && <Alert message={alert.msg} type={alert.type} icon={alert.icon} />}
           <Routes>
@@ -62,8 +65,14 @@ function App() {
                 <Analysisdata />
               </ProtectedRoutes>
             } />
+            <Route exact path='/dashboard/News' element={
+              <ProtectedRoutes>
+                <Detailenews/>
+              </ProtectedRoutes>
+            } />
           </Routes>
         </Router>
+      </NewsState>
       </UserState>
     </div>
   );

@@ -8,6 +8,7 @@ const UserState = (props) => {
     const [analysisData, setAnalysisData] = useState([]);
     const[analysisdatabyid,setgetanalysisdatabyid]=useState([]);
     const[chartdata,setchartdata]=useState([]);
+    const[tabledata,setTabledata]=useState([]);
     
     const hasFetchedData = useRef(false);
     // get user information
@@ -113,11 +114,28 @@ const UserState = (props) => {
             console.log("Error: " + err.message);
             }
         };
+    // get currency data for table data
+    const gettabledata=async()=>{
+        try{
+            const response=await fetch(`${host}/api/getcoincryptoprice/alltabledata`);
+            if(!response.ok){
+                const errorData=await response.json();
+                throw new Error(`HTTP error! status: ${response.status} - ${errorData.error}`);
+            }
+            const json=await response.json();
+            if(json){
+                setTabledata(json);
+            }
+
+        }catch(err){
+            console.log("Error: " + err.message);
+        }
+    }
     
 
 
     return (
-        <UserContext.Provider value={{ state,analysisData,analysisdatabyid,chartdata,getUser, getanalysisdata,getanalysisdatabyid,getchartdata}}>
+        <UserContext.Provider value={{ state,analysisData,analysisdatabyid,chartdata,tabledata,getUser, getanalysisdata,getanalysisdatabyid,getchartdata,gettabledata}}>
             {props.children}
         </UserContext.Provider>
     );

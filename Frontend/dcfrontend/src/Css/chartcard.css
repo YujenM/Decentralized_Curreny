@@ -39,7 +39,11 @@
     position: relative;
     height: 70px;
 }
-
+@media (max-width:800px){
+    .chart-card{
+        width:40vw;
+    }
+}
 @media (max-width:500px){
     .chart-card{
         width: 100%;
