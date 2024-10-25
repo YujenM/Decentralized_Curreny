@@ -10,9 +10,11 @@ import Login from './pages/Login';
 import Signuppage from './pages/Signuppage';
 import Navbar from './Components/Nabar';
 import Dashboard from './pages/Dashboard';
+import Trending from  './pages/Trending';
 import ProtectedRoutes from './Components/ProtectedRoutes';
 import UserState from './Context/User/Userstate';
 import NewsState from './Context/news/NewsState';
+import Trendingdata from './Context/Trendingdata/Trendingstate'
 import Alert from './Components/Alert';
 import { useState } from 'react';
 import Analysisdata from './pages/AnalysisDetails';
@@ -48,6 +50,7 @@ function App() {
     <div className="App">
       <UserState>
       <NewsState>
+      <Trendingdata>
       <Router>
           <DisplayNavbar />
           {alert && <Alert message={alert.msg} type={alert.type} icon={alert.icon} />}
@@ -58,6 +61,11 @@ function App() {
             <Route exact path='/dashboard' element={
               <ProtectedRoutes>
                 <Dashboard />
+              </ProtectedRoutes>
+            } />
+            <Route exact path='/trending' element={
+              <ProtectedRoutes>
+                <Trending />
               </ProtectedRoutes>
             } />
             <Route exact path='/dashboard/analysis' element={
@@ -72,6 +80,7 @@ function App() {
             } />
           </Routes>
         </Router>
+      </Trendingdata>
       </NewsState>
       </UserState>
     </div>

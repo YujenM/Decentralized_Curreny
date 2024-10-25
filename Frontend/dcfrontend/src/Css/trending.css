@@ -1,0 +1,175 @@
+:root {
+    --mainColor: #1A1A1D;
+    --mainColorLight: #4E4E50;
+    --secondaryColor: #6F2232;
+    --textColor: #E5E5E5;
+    --optionColor: #EC1D24;
+    --activeColor: #7F00FF;
+    --newsbackground: #1C1931;
+    --color1: #FB03F5;
+    --color2: #AA9CFF;
+    --backgroundcolor:#080808;
+    --hover-color: #FFA500;
+    --backgroundrgba: rgba(26, 26, 29, 1);
+    --heading-h1-font-size: 2.75rem;
+    --heading-h2-font-size: 2rem;
+    --heading-h3-font-size: 1.5rem;
+    --heading-h4-font-size: 1.125rem;
+    --heading-h5-font-size: 1rem;
+}
+
+.Trendingchart {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    padding: 20px;
+}
+
+.custom-dropdown {
+    position: relative;
+    width: 200px;
+    cursor: pointer;
+}
+
+.dropdown-header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color:var(--mainColorLight);
+    color: var(--textColor);
+}
+
+.dropdown-header img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color:var(--mainColorLight);
+    color: var(--textColor);
+    z-index: 1;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+}
+.dropdown-content::-webkit-scrollbar {
+    display: none;
+}
+
+.custom-dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.dropdown-item img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.dropdown-item:hover {
+    background-color: var(--hover-color);
+    color: var(--mainColor);
+}
+
+.check {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.Analysisbtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 5vw;
+    height: 5vh;
+    background-color: var(--mainColorLight);
+    color: var(--textColor);
+    margin: 5px;
+}
+
+.Analysisbtn:hover {
+    background-color: var(--hover-color);
+    color: var(--mainColor);
+}
+.Analysisbtn.active {
+    background-color: var(--hover-color);
+    color: var(--mainColor);
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1024px) {
+    .custom-dropdown {
+        width: 150px;
+    }
+
+    .Analysisbtn {
+        width: 7vw;
+        height: 6vh;
+    }
+    .Trendingchart{
+        /* background-color: red; */
+        padding: 0;
+        width: 100%;
+    }
+    .custom-dropdown{
+        width: 30%;
+        margin: 0;
+        
+    }
+}
+
+@media (max-width: 768px) {
+    .check {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .custom-dropdown{
+        width: 30%;
+        margin: 0;
+        
+    }
+    .Trendingchart{
+        /* background-color: red; */
+        padding: 0;
+        width: 100%;
+    }
+
+    .Analysisbtn {
+        width: 100%;
+        margin: 10px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .Analysisbtn {
+        width: 100%;
+        height: 50px;
+        font-size: 1rem;
+    }
+    .custom-dropdown{
+        width: 60%;
+        margin: 0;
+        
+    }
+   
+    
+
+    .dropdown-header img,
+    .dropdown-item img {
+        width: 16px;
+        height: 16px;
+    }
+}
