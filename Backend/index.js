@@ -43,6 +43,8 @@ app.use('/api/getcoincryptoprice',coincryptoprice)
 
 const getnewsroute=require('./routes/News/NewsRoutes');
 app.use('/Markapi/News',getnewsroute);
+const getportfolioroute=require('./routes/portfolionotification/portfolioroutes');
+app.use('/Markapi/Portfolio',getportfolioroute);
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);

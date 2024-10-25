@@ -5,7 +5,7 @@ const getanalysiscryptodata=async(req,res)=>{
     try{
         const analysisdataquery='SELECT cc.Crypto_Name , cc.Crypto_Symbol , cc.Crypto_image, cc.Crypto_Discription, cc.Crypto_Websiteurl,cc.Crypto_Rank FROM Crypto_Currencies cc WHERE cc.UUID=?  '
         const analysisresult= await db.getquery(analysisdataquery,[id]);
-        console.log(analysisresult);
+        // console.log(analysisresult);
         return res.send(analysisresult);
     }catch(err){
         throw new Error(`Error fetching analysis data:${err.message}`);

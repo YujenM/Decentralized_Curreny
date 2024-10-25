@@ -9,8 +9,11 @@ import Intropage from './pages/Intropage';
 import Login from './pages/Login';
 import Signuppage from './pages/Signuppage';
 import Navbar from './Components/Nabar';
+// pgaes
 import Dashboard from './pages/Dashboard';
 import Trending from  './pages/Trending';
+import Portfolio from './pages/Portfolio'
+// 
 import ProtectedRoutes from './Components/ProtectedRoutes';
 import UserState from './Context/User/Userstate';
 import NewsState from './Context/news/NewsState';
@@ -66,6 +69,11 @@ function App() {
             <Route exact path='/trending' element={
               <ProtectedRoutes>
                 <Trending />
+              </ProtectedRoutes>
+            } />
+            <Route exact path='/portfolio' element={
+              <ProtectedRoutes>
+                <Portfolio />
               </ProtectedRoutes>
             } />
             <Route exact path='/dashboard/analysis' element={
