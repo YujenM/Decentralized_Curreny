@@ -4,6 +4,7 @@ const cryptocoinservice=require('../../Services/coinapiprice/coinapiprice')
 const analysisdataservice=require('../../Services/Crypto/analysiscryptodata')
 const tabledataservices=require('../../Services/Crypto/tabledata');
 const allcurrencychart=require('../../Services/Crypto/allcurrencychart');
+const trendingmodule=require('../../Services/Crypto/trendingmodule.js')
 
 router.get('/',(req,res)=>{
     res.send("Hello from getcoincryptoprice");
@@ -22,6 +23,7 @@ router.post('/addcryptos', async (req, res, next) => {
 });
 
 router.get('/getanalysiscryptodata/:id',analysisdataservice.getanalysiscryptodata);
-router.get('/alltabledata',tabledataservices.fetchtablgit edata);
+router.get('/alltabledata',tabledataservices.fetchtabledata);
 router.get('/allcurrencychartdata',allcurrencychart.fetchallcurrencychart);
+router.get('/trendingdata/:cryptoname/:cryptotime',trendingmodule.fetchtrendingdata)
 module.exports=router;
