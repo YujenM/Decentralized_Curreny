@@ -14,7 +14,6 @@ const authMiddleware = (req, res, next) => {
         next();
     } catch (err) {
         console.error("Token verification failed: ", err.message);
-
         if (err.name === 'TokenExpiredError') {
             return res.status(401).json({ error: "Token expired, please login again" });
         } else if (err.name === 'JsonWebTokenError') {
