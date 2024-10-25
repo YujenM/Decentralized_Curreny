@@ -10,7 +10,7 @@ function Dashboard() {
   return (
     <div className="dashboard-container">
       <div className="dashboard-content">
-        <Analysisdata/>
+        <Analysisdata heading={"Analysis Data"}/>
       </div>
       <div>
         <DashboardChart/>

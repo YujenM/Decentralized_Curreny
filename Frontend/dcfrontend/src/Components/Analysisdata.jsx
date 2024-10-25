@@ -24,7 +24,7 @@ const responsive = {
   },
 };
 
-function Analysisdata() {
+function Analysisdata(props) {
   const { analysisData, getanalysisdata } = useContext(UserContext);
   const hasFetchedData = useRef(false);
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ function Analysisdata() {
 
   return (
     <div className='analysisbg'>
-      <h1 className='analysishead'>Analysis Data</h1>
+      <h1 className='analysishead'>{props.heading}</h1>
       {analysisData && analysisData.length > 0 ? (
         <Carousel
           swipeable={true}
