@@ -9,10 +9,12 @@ const addcryptoportfolio = async (req, res) => {
         if (!user_id || !cryptoUUID) {
             return res.status(400).json({ error: "User ID or Crypto UUID is missing" });
         }
-        const checkUUIDquery = `SELECT UUID FROM Portfolio WHERE UUID = ?`;
-        const checkUUIDParams = [cryptoUUID];
+        
+        const checkUUIDquery = `SELECT UUID FROM Portfolio WHERE UUID = ? AND User_ID = ?`;
+        const checkUUIDParams = [cryptoUUID, user_id];
         const checkUUIDResult = await db.getquery(checkUUIDquery, checkUUIDParams);
         if(checkUUIDResult.length>0){
+            console.log("run")
             return res.status(400).json({
                 message:"Crypto Already added to Portfolio"
             })
@@ -44,52 +46,59 @@ const addcryptoportfolio = async (req, res) => {
     }
 };
 
-const getcrypto=async(req,res)=>{
-    try{
-        const userid=req.user.User_ID;
-        // const {cryptoUUID}=req.body;
-        const getportfolioquerry="SELECT pc.UUID, cc.Crypto_Name, cc.Crypto_Symbol, cp.numberofexchanges, cp.24HVolume, cp.Price FROM Portfolio pc JOIN Crypto_Currencies cc ON pc.UUID = cc.UUID JOIN Crypto_price cp ON pc.UUID = cp.UUID WHERE pc.User_ID =? AND cp.timeInterval ='24h';";
-        const getportfolioresult=await db.getquery(getportfolioquerry,[userid]);
-        if(getportfolioresult.length===0){
-            return res.status(404).json({error:"No data found"});
+const getcrypto = async (req, res) => {
+    try {
+        const userid = req.user.User_ID;
+        const getportfolioquerry = `
+            SELECT pc.UUID, cc.Crypto_Name, cc.Crypto_Symbol, cp.numberofexchanges, cp.24HVolume, cp.Price 
+            FROM Portfolio pc 
+            JOIN Crypto_Currencies cc ON pc.UUID = cc.UUID 
+            JOIN Crypto_price cp ON pc.UUID = cp.UUID 
+            WHERE pc.User_ID = ? AND cp.timeInterval = '24h';
+        `;
+        const getportfolioresult = await db.getquery(getportfolioquerry, [userid]);
+        
+        if (getportfolioresult.length === 0) {
+            return res.status(200).json({ message: "No data found" });
         }
+
         res.status(200).json({
-            success:true,
-            data:getportfolioresult
-        })
-
-    }catch(err){
-        console.log("server error:",err.message);
-        res.send(500).json({error:"Internal Server Error"});
+            success: true,
+            data: getportfolioresult,
+        });
+    } catch (err) {
+        console.log("server error:", err.message);
+        res.status(500).json({ error: "Internal Server Error" });
     }
-}
+};
 
-const deletecrypto=async(req,res)=>{
-    try{
-        const userid=req.user.User_ID;
-        const {cryptoUUID}=req.body;
+const deletecrypto = async (req, res) => {
+    try {
+        const userid = req.user.User_ID;
+        const { cryptoUUID } = req.body;
+
         const checkUUIDquery = `SELECT UUID FROM Portfolio WHERE UUID = ?`;
-        const checkUUIDParams = [cryptoUUID];
-        const checkUUIDResult = await db.getquery(checkUUIDquery, checkUUIDParams);
-        if(checkUUIDResult.length===0){
-            return res.status(400).json({error:"Crypto UUID does not exist in portfolio"});
+        const checkUUIDResult = await db.getquery(checkUUIDquery, [cryptoUUID]);
+        if (checkUUIDResult.length === 0) {
+            return res.status(400).json({ error: "Crypto UUID does not exist in portfolio" });
         }
 
-        const deleteportfolioquerry="DELETE FROM Portfolio WHERE User_ID = ? AND UUID = ?";
-        const deleteportfolioresult=await db.getquery(deleteportfolioquerry,[userid,cryptoUUID]);
-        if(deleteportfolioresult.affectedRows===0){
-            return res.status(404).json({error:"No data found"});
+        const deleteportfolioquerry = "DELETE FROM Portfolio WHERE User_ID = ? AND UUID = ?";
+        const deleteportfolioresult = await db.getquery(deleteportfolioquerry, [userid, cryptoUUID]);
+        if (deleteportfolioresult.affectedRows === 0) {
+            return res.status(404).json({ error: "No data found" });
         }
+
         res.status(200).json({
-            success:true,
-            data:deleteportfolioresult
-        })
-
-    }catch(err){
-        console.log("server error:",err.message);
-        res.send(500).json({error:"Internal Server Error"});
+            success: true,
+            data: deleteportfolioresult,
+        });
+    } catch (err) {
+        console.log("server error:", err.message);
+        res.status(500).json({ error: "Internal Server Error" });
     }
-}
+};
+
 
 module.exports = {
     addcryptoportfolio,

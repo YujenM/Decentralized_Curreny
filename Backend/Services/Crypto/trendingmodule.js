@@ -12,7 +12,14 @@ const fetchtrendingdata = async (req, res) => {
                 cp.Price,
                 cp.Currency,
                 cp.Sparklingline,
-                cp.timeInterval
+                cp.timeInterval,
+                cp.numberofmarkets,
+                cp.numberofexchanges,
+                cp.24HVolume,
+                cp.marketcap,
+                cp.Dmarketcap,
+                cp.cryptoChange
+
             FROM 
                 Crypto_Currencies cc
             JOIN 

@@ -10,8 +10,7 @@ const fetchDecentralizedCurrency = async (req, res, next) => {
     const timestampTo = "2024-10-04T00:00:00Z";
     
     // Updated insert statement excluding prediction_id
-    const sqlInsert = `INSERT INTO Predictions (crypto_id, currency, open, close, high, low, volume, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-    const sqlCheckDuplicate = `SELECT COUNT(*) AS count FROM Prices WHERE crypto_id = ? AND timestamp = ?`;
+    
     
     for (const decentralizedCurrency of listofdecentralizedcurrency) {
         const apiUrl = `https://real-time-stock-finance-quote.p.rapidapi.com/quote/crypto/${decentralizedCurrency}-USD?frame=${frame}&limit=10000&from=${timestampFrom}&to=${timestampTo}`;
