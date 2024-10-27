@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as icon from '@fortawesome/free-solid-svg-icons';
 
-function AnalysisDetails() {
+function AnalysisDetails(props) {
   const location = useLocation();
   const { uuid } = location.state || {};
   const { analysisdatabyid, getanalysisdatabyid } = useContext(UserContext);
@@ -23,6 +23,44 @@ function AnalysisDetails() {
 
   const handlebackclick=()=>{
     navigate('/dashboard');
+  }
+  const addtoportfolio=async()=>{
+    const host = "http://localhost:2000";
+    const authToken = localStorage.getItem('authtoken');
+    if (!authToken) {
+        console.log("No token found. Redirecting to login.");
+        return;
+    }
+    try{
+      const response=await fetch(`${host}/Markapi/Portfolio/addcryptoportfolio`,{
+          method:'POST',
+          headers:{
+              'Content-Type':'application/json',
+              'auth-token':authToken,
+          },
+          body:JSON.stringify({
+              cryptoUUID: uuid,
+          }),
+      })
+      if(!response.ok){
+          const errorData=await response.json();
+          props.Displayalert(errorData.message,"Danger","faExclamation");
+          throw new Error(`HTTP error! Status: ${response.status} - ${errorData.message}`);
+          
+          
+      }
+      const json=await response.json();
+      if(json){
+        props.Displayalert(json.message,"Check","faCheck");
+      }
+      console.log(json)
+
+
+    }catch(err){
+        console.log("Error: " + err.message);
+    }
+
+
   }
 
   return (
@@ -45,6 +83,9 @@ function AnalysisDetails() {
                 <p className='text-center mt-3 analysisRank'>Rank: {item.Crypto_Rank}</p>
                 <div className='analyisbtn'>
                   <button ><a href={item.Crypto_Websiteurl}>Learn More <FontAwesomeIcon icon={icon.faChevronRight} /></a></button>
+                </div>
+                <div className='analyisbtn pb-5'>
+                  <button onClick={addtoportfolio} >Add to Portfolio <FontAwesomeIcon icon={icon.faChevronRight} /></button>
                 </div>
               </div>
               

@@ -107,6 +107,24 @@
     background-color: var(--hover-color);
     color: var(--mainColor);
 }
+.trendingtabletable{
+
+    width: 100%;
+    background-color: var(--newsbackground);
+    border: 1px solid var(--mainColor);
+    height: 90%;
+    padding-bottom: 2%;
+    /* height: 20vh; */
+    /* color: red; */
+}
+.trendingdata{
+    color: var(--textColor);
+    font-size: var(--heading-h4-font-size);
+    padding: 10px;
+    border-bottom: 1px solid var(--mainColor);
+    /* border-top: 1px solid var(--textColor); */
+    border-bottom: 1px solid var(--textColor);
+}
 
 /* Media Queries for Responsiveness */
 @media (max-width: 1024px) {

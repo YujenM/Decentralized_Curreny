@@ -3,7 +3,7 @@ const db=require('../../Database/ConnectDb');
 const fetchallcurrencychart = async (req, res) => {
     try {
         const chartquery = `
-            SELECT cc.Crypto_Name,cc.Crypto_Symbol ,cc.Crypto_image, cp.Price, cp.24HVolume, cp.Sparklingline, cp.Currency
+            SELECT cc.Crypto_Name,cc.Crypto_Symbol ,cc.Crypto_image, cp.Price, cp.24HVolume, cp.Sparklingline ,cp.Currency
             FROM Crypto_Currencies cc
             INNER JOIN Crypto_price cp ON cc.UUID = cp.UUID
             WHERE cp.timeInterval = '24h'

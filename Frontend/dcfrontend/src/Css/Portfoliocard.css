@@ -1,0 +1,87 @@
+:root {
+    --mainColor: #1A1A1D;
+    --mainColorLight: #4E4E50;
+    --secondaryColor: #6F2232;
+    --textColor: #E5E5E5;
+    --optionColor: #EC1D24;
+    --activeColor: #7F00FF;
+    --newsbackground: #1C1931;
+    --color1: #FB03F5;
+    --color2: #AA9CFF;
+    --backgroundcolor:#080808;
+    --backgroundrgba: rgba(26, 26, 29, 1);
+    --heading-h1-font-size: 2.75rem;
+    --heading-h2-font-size: 2rem;
+    --heading-h3-font-size: 1.5rem;
+    --heading-h4-font-size: 1.125rem;
+    --heading-h5-font-size: 1rem;
+}
+
+.portfoliocard{
+    background-color: var(--newsbackground);
+    width: 70%;
+    height: 20vh;
+    padding: 5%;
+    margin-top: 2%;
+    border-radius: 20px;
+}
+.cryptotitle{
+    color: var(--textColor);
+    font-size: var(--heading-h3-font-size);
+    font-weight: bold;
+}
+.cardname{
+    display: flex;
+}
+.cardname img{
+    width: 20%;
+    height: 20%px;
+    border-radius: 50%;
+}
+
+.deletebtn button{
+    background-color: var(--activeColor);
+    color: var(--textColor);
+    border: none;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px;
+}
+.price p{
+    color: var(--textColor);
+    font-size: var(--heading-h3-font-size);
+    font-weight: bold;
+}
+
+@media (max-width:500px){
+    .portfoliocard{
+        width: 90%;
+        height: 20vh;
+        padding: 5%;
+        margin: 5%;
+        border-radius: 20px;
+    }
+    .cryptotitle{
+        color: var(--textColor);
+        font-size: var(--heading-h4-font-size);
+        font-weight: bold;
+    }
+    .cardname img{
+        width: 20%;
+        height: 20%px;
+        border-radius: 50%;
+    }
+    .deletebtn button{
+        background-color: var(--activeColor);
+        color: var(--textColor);
+        border: none;
+        border-radius: 10px;
+        padding: 5px;
+        margin: 5px;
+    }
+    .price p{
+        color: var(--textColor);
+        font-size: var(--heading-h4-font-size);
+        font-weight: bold;
+    }
+}

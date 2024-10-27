@@ -8,7 +8,7 @@ const NewsState = (props) => {
 
     const getNews = async () => {
         try {
-            const response = await fetch(`${host}/Markapi/News/getlatestnews/20`, {
+            const response = await fetch(`${host}/Markapi/News/getlatestnews/40`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

@@ -16,10 +16,7 @@ const port = 2000;
 app.use(cors());
 app.use(express.json());
 
-// Serve the index.html on the root URL
-// app.get('/', (req, res) => {
-//     res.sendFile(path.join(__dirname, 'routes/crypto/index.html'));
-// });
+
 
 // Define your routes
 const authRoutes = require('./routes/auth/auth');
@@ -45,6 +42,8 @@ const getnewsroute=require('./routes/News/NewsRoutes');
 app.use('/Markapi/News',getnewsroute);
 const getportfolioroute=require('./routes/portfolionotification/portfolioroutes');
 app.use('/Markapi/Portfolio',getportfolioroute);
+const getweeklydata=require('./routes/geweeklydata/cryptocoinroute');
+app.use('/Markapi/Weeklydata',getweeklydata);
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
