@@ -11,6 +11,8 @@ function Trending() {
             <h1 className='Pagetitle' >Trending Prediction Module</h1>
             <Trendingchart/>
         </div>
+
+
     </div>
   )
 }

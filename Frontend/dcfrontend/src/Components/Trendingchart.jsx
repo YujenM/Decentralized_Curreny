@@ -21,7 +21,7 @@ function Trendingchart() {
             gettrendingdata(selectedCrypto, analysitime);
             hasFetchedData.current = true;
         }
-        console.log(trendingdata);
+        // console.log(trendingdata);
     }, [gettrendingdata, selectedCrypto, analysitime, trendingdata]);
 
     const cryptos = [
@@ -109,10 +109,56 @@ function Trendingchart() {
                                 },
                             }}
                         />
+                        
+
                     ) : (
                         <p>There is no data</p>
                     )
                 }
+            </div>
+            <div className='trendingtabletable mt-5'>
+                {
+                    trendingdata.status==="success" && trendingdata.data?(
+                        <div >
+                            <div className=' trendingdata flex justify-between m-2'>
+                                <h5>Crypto Name</h5>
+                                <p>{trendingdata.data[0].Crypto_Name}</p>
+                            </div>
+                            <div className='trendingdata flex justify-between m-2'>
+                                <h5>Crypto Price</h5>
+                                <p>{trendingdata.data[0].Price.slice(0,8)}</p>
+                            </div>
+                            <div className='trendingdata flex justify-between m-2'>
+                                <h5>Number of Markets</h5>
+                                <p>{trendingdata.data[0].numberofmarkets}</p>
+                            </div>
+                            <div className='trendingdata flex justify-between m-2'>
+                                <h5>Number of Exchanges</h5>
+                                <p>{trendingdata.data[0].numberofexchanges}</p>
+                            </div>
+                            <div className='trendingdata flex justify-between m-2'>
+                                <h5>24H Volume</h5>
+                                <p>{trendingdata.data[0]['24HVolume'].slice(0,8)}</p>
+                            </div>
+                            <div className='trendingdata flex justify-between m-2'>
+                                <h5>MarketCap</h5>
+                                <p>{trendingdata.data[0].marketcap}</p>
+                            </div>
+                            <div className='trendingdata flex justify-between m-2'>
+                                <h5>DMarketCap</h5>
+                                <p>{trendingdata.data[0].Dmarketcap}</p>
+                            </div>
+                            <div className='trendingdata flex justify-between m-2'>
+                                <h5>Crypto Change</h5>
+                                <p>{trendingdata.data[0].cryptoChange}</p>
+                            </div>
+                        </div>
+                        
+                    ):(
+                        <p>There is no data</p>
+                    )
+                }
+                
             </div>
         </div>
     );

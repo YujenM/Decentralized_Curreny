@@ -15,8 +15,11 @@ import Trending from  './pages/Trending';
 import Portfolio from './pages/Portfolio'
 // 
 import ProtectedRoutes from './Components/ProtectedRoutes';
+// states
 import UserState from './Context/User/Userstate';
 import NewsState from './Context/news/NewsState';
+
+// 
 import Trendingdata from './Context/Trendingdata/Trendingstate'
 import Alert from './Components/Alert';
 import { useState } from 'react';
@@ -73,12 +76,12 @@ function App() {
             } />
             <Route exact path='/portfolio' element={
               <ProtectedRoutes>
-                <Portfolio />
+                <Portfolio Displayalert={Displayalert} />
               </ProtectedRoutes>
             } />
             <Route exact path='/dashboard/analysis' element={
               <ProtectedRoutes>
-                <Analysisdata />
+                <Analysisdata Displayalert={Displayalert} />
               </ProtectedRoutes>
             } />
             <Route exact path='/dashboard/News' element={
