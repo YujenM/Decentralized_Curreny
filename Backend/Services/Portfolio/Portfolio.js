@@ -50,7 +50,7 @@ const getcrypto = async (req, res) => {
     try {
         const userid = req.user.User_ID;
         const getportfolioquerry = `
-            SELECT pc.UUID, cc.Crypto_Name, cc.Crypto_Symbol, cp.numberofexchanges, cp.24HVolume, cp.Price 
+            SELECT pc.UUID, cc.Crypto_Name, cc.Crypto_Symbol,cc.Crypto_image ,cp.numberofexchanges, cp.24HVolume, cp.Price 
             FROM Portfolio pc 
             JOIN Crypto_Currencies cc ON pc.UUID = cc.UUID 
             JOIN Crypto_price cp ON pc.UUID = cp.UUID 

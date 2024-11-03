@@ -45,6 +45,9 @@ app.use('/Markapi/Portfolio',getportfolioroute);
 const getweeklydata=require('./routes/geweeklydata/cryptocoinroute');
 app.use('/Markapi/Weeklydata',getweeklydata);
 
+const settingsroute=require('./routes/Settings/settingroutes');
+app.use('/Markapi/Settings',settingsroute);
+
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });

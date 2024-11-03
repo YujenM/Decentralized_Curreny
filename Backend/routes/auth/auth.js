@@ -3,6 +3,7 @@ const router = express.Router();
 require("dotenv").config();
 const passport = require('passport');
 require('./googleauth');
+
 // importing middleware
 const fetchusers=require('../../middleware/authmiddleware');
 const session = require('express-session');
@@ -20,11 +21,14 @@ const JWT_Secret_key = process.env.SECRET_KEY;
 
 const {userlogin}=require('../../Services/authentication/Login');
 const {validateSignup,userSignup}=require('../../Services/authentication/Signup');
+const forgetpasswordservice =require('../../Services/authentication/forgetpassword');
 
 // testing route
 router.get('/test', (req, res) => {
     res.send('Hello World');
 });
+
+
 
 // signup route
 
@@ -66,7 +70,7 @@ router.post('/userlogin', [
 router.get('/getuser', fetchusers, async (req, res) => {
     try {
         const userId = req.user.User_ID;
-        const getUserQuery = 'SELECT User_ID, User_Name, User_Email, created_at FROM Users WHERE User_ID = ?';
+        const getUserQuery = 'SELECT User_ID, User_Name, User_Email,User_Photo,User_Number, created_at FROM Users WHERE User_ID = ?';
         const userData = await db.getquery(getUserQuery, [userId]);
 
         if (userData.length === 0) {
@@ -85,8 +89,10 @@ router.get('/getuser', fetchusers, async (req, res) => {
 
 
 
-//update and Forget  password
-router.post('/updatepassword', fetchusers, [
+
+
+
+router.put('/updatepassword', fetchusers, [
     body('oldpassword').isLength({ min: 8 }).withMessage('Old password must be at least 8 characters long'),
     body('newpassword')
         .isLength({ min: 8 }).withMessage('New password must be at least 8 characters long')
@@ -98,25 +104,29 @@ router.post('/updatepassword', fetchusers, [
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() }); 
     }
+
     const { oldpassword, newpassword } = req.body;
     try {
-        const userid = req.user.user_id;
+        const userid = req.user.User_ID;
         const userQuery = 'SELECT User_Password FROM Users WHERE User_ID = ?';
         const results = await db.getquery(userQuery, [userid]);
+        
 
-        if (!results || results.length === 0) {
-            return res.status(404).json({ error: "User not found" });
+
+        if (!results || results.length === 0 || !results[0].User_Password) {
+            return res.status(404).json({ error: "User or password not found" });
         }
 
-        const isMatch = await bcrypt.compare(oldpassword, results[0].password_hash);
+        const isMatch = await bcrypt.compare(oldpassword, results[0].User_Password);
         if (!isMatch) {
             return res.status(401).json({ error: 'Old password is incorrect' });
         }
 
+        // Encrypt the new password and update it in the database
         const salt = bcrypt.genSaltSync(10);
         const hashedNewPassword = bcrypt.hashSync(newpassword, salt);
 
-        const updatePasswordQuery = 'UPDATE Users SET password_hash = ? WHERE user_id = ?';
+        const updatePasswordQuery = 'UPDATE Users SET User_Password = ? WHERE User_ID = ?';
         await db.getquery(updatePasswordQuery, [hashedNewPassword, userid]);
 
         success = true;
@@ -127,6 +137,10 @@ router.post('/updatepassword', fetchusers, [
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
+
+router.post('/request-password-reset',forgetpasswordservice.requestPasswordReset);
+router.post('/verify-reset-code',forgetpasswordservice.verifyResetCode);
+router.post('/reset-password',forgetpasswordservice.resetPassword);
 
 
 router.use(passport.initialize());

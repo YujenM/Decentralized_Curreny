@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Photo Upload</title>
+</head>
+<body>
+    <h1>Upload Profile Photo</h1>
+    <form id="profileForm" enctype="multipart/form-data">
+        <label for="image">Choose Profile Photo:</label>
+        <input type="file" id="image" name="image" accept="image/*" required>
+        <button type="submit">Upload Photo</button>
+    </form>
+    
+    <script>
+        document.getElementById('profileForm').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            
+            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyX0lEIjoiTUFSSy04NDk1MTIiLCJpYXQiOjE3MzAxOTQ0OTh9.xJM4yI98QnY6UNuSP9IwY8io9LVbqT6J0BCr6w-WMg8" // Get auth token from local storage
+            console.log("Token:", token);
+            if (!token) {
+                alert("Authorization token is missing. Please log in.");
+                return;
+            }
+
+            const formData = new FormData();
+            const imageFile = document.getElementById('image').files[0];
+            formData.append('image', imageFile);
+
+            try {
+                const response = await fetch('/Markapi/Settings/addprofile', {
+                    method: 'PUT',
+                    headers: {
+                        'auth-token': token 
+                    },
+                    body: formData
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    alert("Profile photo uploaded successfully!");
+                    console.log("Photo URL:", result.url);
+                } else {
+                    alert("Failed to upload profile photo: " + result.error);
+                    console.error(result);
+                }
+            } catch (error) {
+                console.error("Error uploading photo:", error);
+            }
+        });
+    </script>
+</body>
+</html>
