@@ -1,0 +1,141 @@
+:root {
+    --mainColor: #1A1A1D; 
+    --mainColorLight: #4E4E50; 
+    --secondaryColor: #6F2232; 
+    --textColor: #E5E5E5;
+    --optionColor: #EC1D24;
+    --activeColor: #7F00FF; 
+    --backgroundrgba: rgba(26, 26, 29, 1);
+    --secondarytextcolor: #333333;
+    --heading-h1-font-size: 2.75rem;
+    --heading-h2-font-size: 2rem;
+    --heading-h3-font-size: 1.5rem;
+    --heading-h4-font-size: 1.125rem;
+    --heading-h5-font-size: 1rem;
+    --color1: #FB03F5;
+    --color2: #AA9CFF;
+    --backgroundcolor:#080808;
+    --rgba: 28, 25, 49;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.logo h5 {
+    color: var(--textColor);
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.forgetpasswordmain {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+}
+
+.forgetpassform h1 {
+    color: var(--activeColor);
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.fogetpassbg {
+    background-color: rgba(var(--rgba), 0.3);
+    width: 40%;
+    height: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.forgetpassform {
+    width: 30vw;
+}
+
+.form-group label {
+    color: var(--textColor);
+    font-size: var(--heading-h3-font-size);
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    height: 5vh;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--textColor);
+    color: var(--backgroundcolor);
+}
+
+.submitbtn {
+    width: 100%;
+    height: 5vh;
+    background-color: var(--optionColor);
+    color: var(--textColor);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+    .fogetpassbg {
+        width: 60%;
+        height: 70%;
+    }
+
+    .forgetpassform {
+        width: 50vw;
+    }
+}
+
+@media (max-width: 768px) {
+    .fogetpassbg {
+        width: 80%;
+        height: 70%;
+    }
+
+    .forgetpassform {
+        width: 70vw;
+    }
+
+    .form-group label {
+        font-size: var(--heading-h4-font-size);
+    }
+}
+
+@media (max-width: 480px) {
+    .fogetpassbg {
+        width: 90%;
+        height: auto;
+        padding: 2rem 1rem;
+    }
+
+    .forgetpassform {
+        width: 90%;
+    }
+
+    .forgetpassform h1 {
+        font-size: 1.25rem;
+    }
+
+    .form-group label {
+        font-size: var(--heading-h5-font-size);
+    }
+
+    .form-group input,
+    .submitbtn {
+        height: 4vh;
+    }
+}

@@ -141,7 +141,7 @@ function Login(props) {
               </span>
             </div>
             <div className="flex justify-end ">
-              <Link to="/forgot-password" className="text-sm forgotpass text-blue-500">
+              <Link to="/forgetpassword" className="text-sm forgotpass text-blue-500">
                 Forgot Password?
               </Link>
             </div>

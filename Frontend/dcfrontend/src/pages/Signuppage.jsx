@@ -3,7 +3,7 @@ import { useNavigate, Link, useLocation, json } from "react-router-dom";
 import "../Css/LoginSignup.css";
 import logo from "../Images/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faEnvelope, faLock, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import * as icon from "@fortawesome/free-solid-svg-icons";
 import google from "../Images/Google.png";
 import facebook from "../Images/Facebook.png";
 
@@ -101,7 +101,7 @@ function Signuppage(props) {
         <form onSubmit={handleSubmit} className="mb-4">
           <div className="username">
             <label htmlFor="username" className="labels">
-              <FontAwesomeIcon className="mr-2" icon={faUser} />
+              <FontAwesomeIcon className="mr-2" icon={icon.faUser} />
               Username
             </label>
             <input
@@ -115,7 +115,7 @@ function Signuppage(props) {
           </div>
           <div className="email mt-4">
             <label htmlFor="email" className="labels">
-              <FontAwesomeIcon className="mr-2" icon={faEnvelope} />
+              <FontAwesomeIcon className="mr-2" icon={icon.faEnvelope} />
               Email
             </label>
             <input
@@ -129,7 +129,7 @@ function Signuppage(props) {
           </div>
           <div className="password mb-4 mt-4 relative">
             <label htmlFor="password" className="labels">
-              <FontAwesomeIcon className="mr-2" icon={faLock} />
+              <FontAwesomeIcon className="mr-2" icon={icon.faLock} />
               Password
             </label>
             <input
@@ -144,7 +144,10 @@ function Signuppage(props) {
               className="absolute inset-y-8 right-0 flex items-center px-3 cursor-pointer mt-5"
               onClick={togglePasswordVisibility}
             >
-              <FontAwesomeIcon icon={passwordVisible ? faEyeSlash : faEye} />
+              <FontAwesomeIcon
+                  className="eyeicon"
+                  icon={passwordVisible ? icon.faEyeSlash : icon.faEye}
+                />
             </span>
           </div>
           {/* Uncomment the error message display here if needed */}

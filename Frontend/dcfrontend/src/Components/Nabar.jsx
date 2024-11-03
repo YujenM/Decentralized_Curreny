@@ -31,8 +31,9 @@ const Navbar = () => {
             getUser();
             hasFetchedData.current = true;
         }
+        console.log(state)
         // eslint-disable-next-line
-    }, [getUser]); 
+    }, [getUser,state]); 
     // console.log("this navbar");
     // console.log(state);
 
@@ -48,6 +49,7 @@ const Navbar = () => {
             return username.split(' ')[0];
         }
     }
+    const userprofile=state.User_Photo;
 
     return (
         <div>
@@ -56,17 +58,24 @@ const Navbar = () => {
                     <FontAwesomeIcon icon={icon.faBars} size="xl" onClick={showSidebar} />
                 </Link>
                 <div className="search-container">
-                    <input type="text" placeholder="Search..." className="search-input" />
+                    {/* <input type="text" placeholder="Search..." className="search-input" />
                     <button className="search-button">
                         <FontAwesomeIcon icon={icon.faSearch} />
-                    </button>
+                    </button> */}
                 </div>
                 {window.innerWidth >= 900 && (
                     <div className="user-container mr-3">
                         <p className="mr-4 text-2xl username">
                             Welcome {getfirstname(state?.User_Name) || 'User'}
                         </p>
-                        <FontAwesomeIcon icon={icon.faUser} size="xl" />
+                        {
+                            state?.User_Photo ? (
+                                
+                                <img src={userprofile} alt="User" className="user-img" />
+                            ) : (
+                                <FontAwesomeIcon icon={icon.faUserCircle} size="2x" />
+                            )
+                        }
                     </div>
                 )}
             </div>
@@ -74,6 +83,7 @@ const Navbar = () => {
                 <div className="sidebar-header">
                     <div className="Marklogo">
                         <img src={logo} alt="Logo" className="logo-img" />
+                        
                         <span className="logo-name">M.A.R.K</span>
                     </div>
                     {window.innerWidth < 900 && (
