@@ -24,11 +24,11 @@ function Portfolio(props) {
         
         if (!response.ok) {
             console.log('Failed to delete');
-            props.Displayalert('Failed to delete', 'danger', 'fatimes');
+            props.Displayalert('Failed to delete', 'Danger', 'faExclamation');
         } else {
             getportfoliodata();
             // setPortfolioData(portfolioData.filter((data) => data.uuid !== uuid));
-            props.Displayalert('Deleted successfully', 'success', 'facheck');
+            props.Displayalert('Deleted successfully', 'Check', 'faCheck');
         }
     };
 

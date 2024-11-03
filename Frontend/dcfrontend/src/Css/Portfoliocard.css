@@ -9,6 +9,7 @@
     --color1: #FB03F5;
     --color2: #AA9CFF;
     --backgroundcolor:#080808;
+    --portfolio-background: #0F0757;
     --backgroundrgba: rgba(26, 26, 29, 1);
     --heading-h1-font-size: 2.75rem;
     --heading-h2-font-size: 2rem;
@@ -18,18 +19,23 @@
 }
 
 .portfoliocard{
-    background-color: var(--newsbackground);
-    width: 70%;
-    height: 20vh;
+    background-color: var(--portfolio-background);
+    width: 100%;
+    height: 60%;
     padding: 5%;
     margin-top: 2%;
-    border-radius: 20px;
+}
+.cryptocontent{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 .cryptotitle{
     color: var(--textColor);
     font-size: var(--heading-h3-font-size);
     font-weight: bold;
 }
+
 .cardname{
     display: flex;
 }
@@ -40,22 +46,33 @@
 }
 
 .deletebtn button{
-    background-color: var(--activeColor);
+    /* background-color: var(--activeColor); */
     color: var(--textColor);
     border: none;
     border-radius: 10px;
     padding: 5px;
-    margin: 5px;
+    /* margin: 5px; */
+}
+
+.price{
+    padding-bottom: 5%;
+}
+.Pcardtitle{
+    color: var(--textColor);
+    font-size: var(--heading-h4-font-size);
+    font-weight: bold;
+    /* margin-top: 5%; */
 }
 .price p{
     color: var(--textColor);
-    font-size: var(--heading-h3-font-size);
-    font-weight: bold;
+    font-size: var(--heading-h5-font-size);
+    font-weight: lighter;
+    
 }
 
 @media (max-width:500px){
     .portfoliocard{
-        width: 90%;
+        width: 100%;
         height: 20vh;
         padding: 5%;
         margin: 5%;

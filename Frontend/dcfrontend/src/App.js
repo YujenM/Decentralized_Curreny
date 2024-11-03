@@ -8,6 +8,9 @@ import {
 import Intropage from './pages/Intropage';
 import Login from './pages/Login';
 import Signuppage from './pages/Signuppage';
+import Forgetpassword from './pages/Forgetpassword';
+import Forgetpasspin from './pages/frogetpasswordpin';
+import Changepassword from './pages/Changepassword';
 import Navbar from './Components/Nabar';
 // pgaes
 import Dashboard from './pages/Dashboard';
@@ -28,7 +31,7 @@ import Detailenews from './pages/Detailenews';
 
 const DisplayNavbar = () => {
   const location = useLocation();
-  const hideNavbarRoutes = ['/login', '/signup','/'];
+  const hideNavbarRoutes = ['/login', '/signup','/', '/forgetpassword', '/forgetpasswordpin','/changepassword'];
 
   if (hideNavbarRoutes.includes(location.pathname.toLowerCase())) {
     return null; 
@@ -64,6 +67,9 @@ function App() {
             <Route exact path='/' element={<Intropage />} />
             <Route exact path='/login' element={<Login Displayalert={Displayalert} />} />
             <Route exact path='/signup' element={<Signuppage Displayalert={Displayalert} />} />
+            <Route exact path='/forgetpassword' element={<Forgetpassword Displayalert={Displayalert} />} />
+            <Route exact path='/forgetpasswordpin' element={<Forgetpasspin Displayalert={Displayalert} />} />
+            <Route exact path='/changepassword' element={<Changepassword  Displayalert={Displayalert}/>} />
             <Route exact path='/dashboard' element={
               <ProtectedRoutes>
                 <Dashboard />
