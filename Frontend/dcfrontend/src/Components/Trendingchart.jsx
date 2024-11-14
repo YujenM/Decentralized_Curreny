@@ -9,8 +9,8 @@ function Trendingchart() {
     const { trendingdata, gettrendingdata } = useContext(UserContext);
     const hasFetchedData = useRef(false);
     const [selectedCrypto, setSelectedCrypto] = useState('Bitcoin');
-    const [analysitime, SetAnalysistime] = useState('7d');
-    const [activeButton, setActiveButton] = useState('7d');
+    const [analysitime, SetAnalysistime] = useState('24H');
+    const [activeButton, setActiveButton] = useState('24h');
     useEffect(() => {
         
         hasFetchedData.current = false;

@@ -3,11 +3,6 @@
     padding: 0;
     box-sizing: border-box;
 }
-
-
-
-
-
 :root {
     --mainColor: #1A1A1D;
     --mainColorLight: #4E4E50;
@@ -61,7 +56,7 @@
 .newscontainer {
     width: 100%;
     display: flex;
-    justify-content: space-between; 
+    /* justify-content: space-between;  */
     border-bottom: 1px solid var(--textColor);
     margin-top: 5%;
     cursor: pointer;
@@ -111,7 +106,7 @@
 }
 .Dnewsimg img{
     width:30vw;
-    height: 30vh;
+    height: 40vh;
     border-radius: 10px;
 }
 .Dnewsheading{

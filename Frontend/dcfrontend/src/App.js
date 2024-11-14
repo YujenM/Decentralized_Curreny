@@ -28,6 +28,7 @@ import Alert from './Components/Alert';
 import { useState } from 'react';
 import Analysisdata from './pages/AnalysisDetails';
 import Detailenews from './pages/Detailenews';
+import Settings from './pages/Settings';
 
 const DisplayNavbar = () => {
   const location = useLocation();
@@ -93,6 +94,11 @@ function App() {
             <Route exact path='/dashboard/News' element={
               <ProtectedRoutes>
                 <Detailenews/>
+              </ProtectedRoutes>
+            } />
+            <Route exact path='/settings' element={
+              <ProtectedRoutes>
+                <Settings/>
               </ProtectedRoutes>
             } />
           </Routes>

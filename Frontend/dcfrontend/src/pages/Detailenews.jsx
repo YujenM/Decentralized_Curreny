@@ -31,11 +31,11 @@ function Detailenews() {
                     deatilednews && deatilednews.length > 0 ? (
                         deatilednews.map((item, index) => (
                             <div className='newsdata' key={index}>
-                                <h1 className='Dnewstitle text-center'>News Details</h1>
+                                <h1 className='Dnewstitle text-center mb-5'>News Details</h1>
                                 <div className='Dnewsimg flex justify-center align-center'>
                                     <img src={item.Tumbnail} alt={item.title} />
                                 </div>
-                                <p className='text-center Dnewsheading'>{item.NewsTitle}</p>
+                                <p className='text-center Dnewsheading mt-5'>{item.NewsTitle}</p>
                                 <p className='text-center mt-3 Dnewsdescription'> {item.NewDescription}</p>
                                 <div className='Dnewsbtn'>
                                     <button ><a href={item.NewsUrl}>Read More <FontAwesomeIcon icon={icon.faChevronRight} /></a></button>
