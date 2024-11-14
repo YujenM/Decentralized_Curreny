@@ -25,7 +25,6 @@ const forgetpasswordservice =require('../../Services/authentication/forgetpasswo
 
 // testing route
 router.get('/test', (req, res) => {
-    // res.send("Hello World");
     res.send('Hello World');
 });
 
