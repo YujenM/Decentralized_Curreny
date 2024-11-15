@@ -12,7 +12,8 @@ function Portfolio(props) {
 
     const handledeletecard = async (uuid) => {
         const authToken = localStorage.getItem('authtoken');
-        const host = "http://localhost:2000";
+        // const host = "http://localhost:2000";
+        const host ="https://decentralized-curreny.onrender.com";
         const response = await fetch(`${host}/Markapi/Portfolio/deletecrypto`, {
             method: 'DELETE',
             headers: {

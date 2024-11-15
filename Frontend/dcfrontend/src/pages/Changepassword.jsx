@@ -32,7 +32,8 @@ function Changepassword(props) {
         setError('');
 
         try {
-            const host = "http://localhost:2000";
+            // const host = "http://localhost:2000";
+            const host ="https://decentralized-curreny.onrender.com";
             const response = await fetch(`${host}/api/auth/reset-password`, {
                 method: 'POST',
                 headers: {

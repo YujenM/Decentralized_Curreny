@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import UserContext from './Usercontext';
 
 const NewsState = (props) => {
-    const host = "http://localhost:2000";
+    // const host = "http://localhost:2000";
+    const host ="https://decentralized-curreny.onrender.com"
     const [news, setNews] = useState([]);
     const[deatilednews,setDeatilednews]=useState([]);
 
