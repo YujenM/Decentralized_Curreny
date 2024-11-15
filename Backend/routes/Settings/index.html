@@ -14,11 +14,21 @@
     </form>
     
     <script>
+        document.getElementById('image').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                console.log("File Name:", file.name); // Log file name
+                console.log("File Type:", file.type); // Log file type
+                console.log("File Size:", file.size); // Log file size
+            } else {
+                console.log("No file selected");
+            }
+        });
+
         document.getElementById('profileForm').addEventListener('submit', async function(event) {
-            event.preventDefault(); // Prevent the default form submission
+            event.preventDefault();
             
-            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyX0lEIjoiTUFSSy04NDk1MTIiLCJpYXQiOjE3MzAxOTQ0OTh9.xJM4yI98QnY6UNuSP9IwY8io9LVbqT6J0BCr6w-WMg8" // Get auth token from local storage
-            console.log("Token:", token);
+            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyX0lEIjoiTUFSSy03MjkzNjEiLCJpYXQiOjE3MzE2Nzg5MDB9.IILJOFJGPl1186R-aiPRYYzDVLpQ74m3Chr2QDa_Ns8";
             if (!token) {
                 alert("Authorization token is missing. Please log in.");
                 return;
@@ -26,7 +36,9 @@
 
             const formData = new FormData();
             const imageFile = document.getElementById('image').files[0];
+            // console.log(formData)
             formData.append('image', imageFile);
+            console.log(imageFile)
 
             try {
                 const response = await fetch('/Markapi/Settings/addprofile', {
@@ -38,6 +50,7 @@
                 });
 
                 const result = await response.json();
+                console.log("Response:", result);
                 if (response.ok) {
                     alert("Profile photo uploaded successfully!");
                     console.log("Photo URL:", result.url);

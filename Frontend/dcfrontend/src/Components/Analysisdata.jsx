@@ -5,6 +5,7 @@ import Analysisdatacar from '../Components/Analysisdatacar';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import UserContext from '../Context/User/Usercontext';
+import Spinner from './Spinner';
 
 const responsive = {
   desktop: {
@@ -13,7 +14,7 @@ const responsive = {
     slidesToSlide: 3,
   },
   tablet: {
-    breakpoint: { max: 1024, min:500 },
+    breakpoint: { max: 1024, min: 500 },
     items: 3,
     slidesToSlide: 2,
   },
@@ -34,12 +35,10 @@ function Analysisdata(props) {
       getanalysisdata();
       hasFetchedData.current = true;
     }
-    // console.log(analysisData); 
   }, [getanalysisdata]);
-  
 
   const handleSymbolClick = (uuid) => {
-    navigate('/dashboard/analysis', { state: { uuid } }); 
+    navigate('/dashboard/analysis', { state: { uuid } });
   };
 
   return (
@@ -75,7 +74,10 @@ function Analysisdata(props) {
           ))}
         </Carousel>
       ) : (
-        <p className='no-data-message'>There is no data available.</p>
+        <div className='spinner-container'>
+          <Spinner />
+          <p className='no-data-message'>Loading data, please wait...</p>
+        </div>
       )}
     </div>
   );

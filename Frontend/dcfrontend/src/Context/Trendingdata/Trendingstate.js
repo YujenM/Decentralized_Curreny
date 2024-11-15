@@ -2,7 +2,8 @@ import React,{useState} from "react";
 import Trendingcontext from './Trendingcontext';
 
 const Trendingstate = (props) => {
-    const host = "http://localhost:2000";
+    // const host = "http://localhost:2000";
+    const host ="https://decentralized-curreny.onrender.com"
     const [trendingdata, setTrendingdata] = useState([]);
     const authToken = localStorage.getItem('authtoken');
     const [getportfolio,setgetportfolio]=useState([]);

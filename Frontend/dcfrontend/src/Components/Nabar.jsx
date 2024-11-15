@@ -31,11 +31,9 @@ const Navbar = () => {
             getUser();
             hasFetchedData.current = true;
         }
-        console.log(state)
+        // console.log(state)
         // eslint-disable-next-line
     }, [getUser,state]); 
-    // console.log("this navbar");
-    // console.log(state);
 
     const showSidebar = () => setSidebar(!sidebar);
 

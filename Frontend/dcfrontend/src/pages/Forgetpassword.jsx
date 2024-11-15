@@ -15,7 +15,8 @@ function Forgetpassword(props) {
         if (loading) return;
 
         setLoading(true);
-        const host = "http://localhost:2000";
+        // const host = "http://localhost:2000";
+        const host ="https://decentralized-curreny.onrender.com";
 
         try {
             const response = await fetch(`${host}/api/auth/request-password-reset`, {

@@ -36,7 +36,9 @@ function Login(props) {
     }
 
     try {
-      const response = await fetch("http://localhost:2000/api/auth/userlogin", {
+      // const host ="http://localhost:2000";
+      const host ="https://decentralized-curreny.onrender.com";
+      const response = await fetch(`${host}/api/auth/userlogin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
