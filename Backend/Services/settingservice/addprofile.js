@@ -1,10 +1,9 @@
+const express = require('express');
 const db = require('../../Database/ConnectDb');
 const cloudinary = require('cloudinary').v2;
 const multer = require('multer');
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-
-// const JWT_SECRET = process.env.SECRET_KEY;
 
 cloudinary.config({
     cloud_name: process.env.CloudName,
@@ -24,6 +23,19 @@ const uploadImage = (req, res, next) => {
     });
 };
 
+const authenticateUser = (req, res, next) => {
+    const token = req.header('auth-token');
+    if (!token) return res.status(401).json({ error: 'Access Denied' });
+
+    try {
+        const verified = jwt.verify(token, process.env.SECRET_KEY);
+        req.user = verified;
+        next();
+    } catch (err) {
+        res.status(400).json({ error: 'Invalid Token' });
+    }
+};
+
 const addprofile = async (req, res) => {
     try {
         const file = req.file;
@@ -36,28 +48,30 @@ const addprofile = async (req, res) => {
                 { folder: "Profile" },
                 (error, result) => {
                     if (error) {
-                        reject(new Error(error.message));
-                    } else {
-                        resolve(result);
+                        return reject(error);
                     }
+                    resolve(result);
                 }
             );
             stream.end(file.buffer);
         });
 
-        const userId = req.user.User_ID;
-        console.log("Userid:"+userId);
+        const userId = req.user?.User_ID;
+        if (!userId) {
+            return res.status(401).json({ error: 'User not authorized' });
+        }
+
         const profileQuery = "UPDATE Users SET User_Photo = ? WHERE User_ID = ?";
-        db.getquery(profileQuery, [result.secure_url, userId], (err) => {
-            if (err) {
-                res.status(500).send('Server Error');
-            } else {
-                res.status(200).json({ message: 'Profile photo updated successfully' });
-            }
-        });
+        const queryResult = await db.getquery(profileQuery, [result.secure_url, userId]);
+
+        if (!queryResult.affectedRows) {
+            return res.status(500).json({ error: 'Server Error: Unable to update profile' });
+        }
+
+        res.status(200).json({ message: 'Profile photo updated successfully' });
     } catch (err) {
-        res.status(500).send('Server Error');
+        res.status(500).json({ error: 'Server Error' });
     }
 };
 
-module.exports = { addprofile, uploadImage };
+module.exports = { addprofile, uploadImage, authenticateUser };
