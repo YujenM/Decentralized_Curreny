@@ -5,7 +5,7 @@ import DashboardChart from '../Components/dashboardchart';
 import Tabledata from '../Components/Tabledata';
 import News from '../Components/News';
 import '../Css/Dashnews.css'
-import Spinner from '../Components/Spinner';
+// import Spinner from '../Components/Spinner';
 
 function Dashboard() {
   return (
