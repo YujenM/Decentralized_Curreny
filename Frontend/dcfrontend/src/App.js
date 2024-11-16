@@ -98,7 +98,7 @@ function App() {
             } />
             <Route exact path='/settings' element={
               <ProtectedRoutes>
-                <Settings/>
+                <Settings  Displayalert={Displayalert}/>
               </ProtectedRoutes>
             } />
           </Routes>

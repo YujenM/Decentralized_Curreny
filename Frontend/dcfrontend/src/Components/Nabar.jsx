@@ -31,10 +31,7 @@ const Navbar = () => {
             getUser();
             hasFetchedData.current = true;
         }
-        // console.log(state)
-        // eslint-disable-next-line
-    }, [getUser,state]); 
-
+    }, [getUser, state.User_Photo]);
     const showSidebar = () => setSidebar(!sidebar);
 
     const getLogout = () => {
