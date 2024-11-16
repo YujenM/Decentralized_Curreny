@@ -1,4 +1,4 @@
-import React, {  useState, useRef } from "react";
+import React, {  useState, useRef,useEffect,useCallback } from "react";
 import UserContext from "./Usercontext";
 
 const UserState = (props) => {
@@ -13,37 +13,53 @@ const UserState = (props) => {
     
     const hasFetchedData = useRef(false);
     // get user information
-    const getUser = async () => {
-        const authToken = localStorage.getItem('authtoken');
-        
-        if (!authToken) {
-            console.log("No token found. Redirecting to login.");
-            return;
-        }
-        
+    const fetchApi = async (url, options = {}) => {
         try {
-            const response = await fetch(`${host}/api/auth/getuser`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'auth-token': authToken,
-                },
-            });
-
+            const response = await fetch(url, options);
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(`HTTP error! status: ${response.status} - ${errorData.error}`);
+                throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
             }
-
-            const json = await response.json();
-            setState(json.user); 
+            return await response.json();
         } catch (err) {
-            console.log("Error: " + err.message);
-            if (err.message.includes("401")) {
-                alert("Session expired, please log in again.");
-            }
+            console.error(err.message);
+            throw err;
         }
     };
+
+    const getUser = useCallback(async () => {
+        const authToken = localStorage.getItem("authtoken");
+        if (!authToken) return;
+        try {
+            const json = await fetchApi(`${host}/api/auth/getuser`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "auth-token": authToken,
+                },
+            });
+            setState(json.user);
+        } catch (err) {
+            if (err.message.includes("401")) alert("Session expired, please log in again.");
+        }
+    }, [host]);
+
+    const updateUserProfile = (photoUrl) => {
+        setState((prevState) => ({
+            ...prevState,
+            User_Photo: photoUrl,
+        }));
+    };
+    const setUserState = (user) => {
+        setState(user);
+    };
+
+    useEffect(() => {
+        if (!hasFetchedData.current) {
+            getUser();
+            hasFetchedData.current = true;
+        }
+    }, [getUser]);
 
     //  get currency id symbol and image
 
@@ -136,7 +152,7 @@ const UserState = (props) => {
 
 
     return (
-        <UserContext.Provider value={{ state,analysisData,analysisdatabyid,chartdata,tabledata,getUser, getanalysisdata,getanalysisdatabyid,getchartdata,gettabledata}}>
+        <UserContext.Provider value={{ state,analysisData,analysisdatabyid,updateUserProfile,setUserState,chartdata,tabledata,getUser, getanalysisdata,getanalysisdatabyid,getchartdata,gettabledata}}>
             {props.children}
         </UserContext.Provider>
     );
