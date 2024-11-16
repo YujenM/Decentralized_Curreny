@@ -43,6 +43,7 @@ const addprofile = async (req, res) => {
             return res.status(400).json({ error: 'No file uploaded' });
         }
 
+        // Upload image to Cloudinary
         const result = await new Promise((resolve, reject) => {
             const stream = cloudinary.uploader.upload_stream(
                 { folder: "Profile" },
@@ -56,11 +57,13 @@ const addprofile = async (req, res) => {
             stream.end(file.buffer);
         });
 
+        // Authenticate user
         const userId = req.user?.User_ID;
         if (!userId) {
             return res.status(401).json({ error: 'User not authorized' });
         }
 
+        // Update user profile photo in the database
         const profileQuery = "UPDATE Users SET User_Photo = ? WHERE User_ID = ?";
         const queryResult = await db.getquery(profileQuery, [result.secure_url, userId]);
 
@@ -68,7 +71,11 @@ const addprofile = async (req, res) => {
             return res.status(500).json({ error: 'Server Error: Unable to update profile' });
         }
 
-        res.status(200).json({ message: 'Profile photo updated successfully' });
+        // Respond with success message and photo URL
+        res.status(200).json({ 
+            message: 'Profile photo updated successfully', 
+            photoUrl: result.secure_url 
+        });
     } catch (err) {
         res.status(500).json({ error: 'Server Error' });
     }
