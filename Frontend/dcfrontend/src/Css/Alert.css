@@ -50,7 +50,7 @@ span{
 }
 .fonticon {
     color: white;
-    font-size: 16px; /* Adjust this value to decrease the icon size */
+    font-size: 40px; 
 }
 
 .alert-close {
