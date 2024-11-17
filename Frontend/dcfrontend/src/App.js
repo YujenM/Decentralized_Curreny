@@ -63,6 +63,7 @@ function App() {
       <Trendingdata>
       <Router>
           <DisplayNavbar />
+          {/* <Alert message="This is a test message" type="Success" icon="faCheck" />   */}
           {alert && <Alert message={alert.msg} type={alert.type} icon={alert.icon} />}
           <Routes>
             <Route exact path='/' element={<Intropage />} />

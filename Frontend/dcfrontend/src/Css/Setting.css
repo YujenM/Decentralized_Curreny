@@ -36,10 +36,7 @@
     border-radius: 8px;
 }
 
-.personalinfo{
-    /* background-color: red; */
-    /* height: 100vh; */
-}
+
 
 
 /* Settings heading */
@@ -83,7 +80,7 @@
     background-color: var(--iconbgcolor);
     opacity: 0.8;
 }
-.fonticon{
+.fonticons{
     width: 3vw;
     height: 10vh;
     color: var(--textColor);
@@ -279,7 +276,7 @@ align-items: center;
         width: 25%;
         height: 20%;
     }
-    .fonticon{
+    .fonticons{
         width: 10vw;
     }
     .dashboard-container {

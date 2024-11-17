@@ -137,7 +137,7 @@ function Personalinfo(props) {
                     />
                 ) : (
                     <div className="usericon">
-                        <FontAwesomeIcon className="fonticon" icon={icon.faUserPlus} />
+                        <FontAwesomeIcon className="fonticons" icon={icon.faUserPlus} />
                     </div>
                 )}
                 <div className="mt-5">
