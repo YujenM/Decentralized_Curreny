@@ -22,7 +22,7 @@ function Trendingchart() {
     useEffect(() => {
         if (!hasFetchedData.current) {
             setLoading(true); // Show spinner before fetching data
-            gettrendingdata(selectedCrypto, analysitime).then(() => setLoading(false)); // Hide spinner after data is fetched
+            gettrendingdata(selectedCrypto, analysitime).then(() => setLoading(false)); 
             hasFetchedData.current = true;
         }
     }, [gettrendingdata, selectedCrypto, analysitime]);

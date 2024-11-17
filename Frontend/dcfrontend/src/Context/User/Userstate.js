@@ -3,7 +3,7 @@ import UserContext from "./Usercontext";
 
 const UserState = (props) => {
     // const host = "http://localhost:2000";
-    const host ="https://decentralized-curreny.onrender.com"
+    const host ="https://decentralized-curreny.onrender.com"?"https://decentralized-curreny.onrender.com":"http://localhost:2000";
     const markdata=[]
     const [state, setState] = useState(markdata);
     const [analysisData, setAnalysisData] = useState([]);

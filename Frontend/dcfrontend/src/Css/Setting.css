@@ -203,7 +203,7 @@ label[for="image"]:hover {
 }
 
 .change-password-btn {
-    background-color:var(--mainColor);
+    background-color:var(--buttombgcolor);
     color: white;
     padding: 0.5rem 1.5rem;
     border: none;
@@ -229,36 +229,36 @@ label[for="image"]:hover {
 }
 .aboutmain {
     margin: 5%;
-  }
+}
   
-  .aboutcontent {
-    font-size: var(--heading-h3-font-size);
-    color: var(--textColor);
-    text-decoration: none;
-    width: 100%;
-  }
-  
-  .logoimg {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .aboutimg {
+.aboutcontent {
+font-size: var(--heading-h3-font-size);
+color: var(--textColor);
+text-decoration: none;
+width: 80%;
+}
+
+.logoimg {
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.aboutimg {
     width: 20vw;
-  }
-  
-  @media (max-width: 768px) {
-    .aboutimg {
-      width: 40vw;
-    }
-  
-    .aboutcontent {
-      font-size: calc(var(--heading-h3-font-size) - 2px);
-      width: 100%;
-    }
-  }
-  
+}
+
+@media (max-width: 768px) {
+.aboutimg {
+    width: 40vw;
+}
+
+.aboutcontent {
+    font-size: calc(var(--heading-h3-font-size) - 2px);
+    width: 100%;
+}
+}
+
 
 /* Media Queries for Responsive Design */
 @media (max-width: 900px) {
