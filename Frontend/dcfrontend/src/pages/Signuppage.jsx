@@ -44,7 +44,7 @@ function Signuppage(props) {
     }
     try {
       // const host ="http://localhost:2000";
-      const host ="https://decentralized-curreny.onrender.com";
+      const host ="https://decentralized-curreny.onrender.com"?"https://decentralized-curreny.onrender.com":"http://localhost:2000";
       const response = await fetch(`${host}/api/auth/usersignup`, {
         method: "POST",
         headers: {
@@ -160,7 +160,7 @@ function Signuppage(props) {
             <button type="submit" className="signupbtn mt-3">Sign Up</button>
           </div>
         </form>
-        <div className="flex justify-center mt-4">
+        {/* <div className="flex justify-center mt-4">
           <div className="or-container">
             <span className="or-line"></span>
             <span className="or-text">OR</span>
@@ -174,7 +174,7 @@ function Signuppage(props) {
           <button className="social-btn ml-2">
             <img src={facebook} alt="facebook" className="facebook" />
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

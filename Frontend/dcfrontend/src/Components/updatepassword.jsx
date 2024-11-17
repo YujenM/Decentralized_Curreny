@@ -44,7 +44,7 @@ function UpdatePassword(props) {
             return;
         }
 
-        const host = 'https://decentralized-curreny.onrender.com';
+        const host ="https://decentralized-curreny.onrender.com"?"https://decentralized-curreny.onrender.com":"http://localhost:2000";
         const authToken = localStorage.getItem('authtoken');
         if (!authToken) {
             setError("Authentication token is missing or invalid.");
@@ -144,9 +144,12 @@ function UpdatePassword(props) {
                     {error && <p className="text-danger">{error}</p>}
                     {success && <p className="text-success">{success}</p>}
 
-                    <button type="submit" className="change-password-btn">
-                        Update Password
-                    </button>
+                    <div className='flex justify-center mt-5'>
+                        <button type="submit" className="change-password-btn">
+                            Update Password
+                        </button>
+                            
+                    </div>
                 </form>
             </div>
         </div>

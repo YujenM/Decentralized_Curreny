@@ -37,7 +37,7 @@ function Login(props) {
 
     try {
       // const host ="http://localhost:2000";
-      const host ="https://decentralized-curreny.onrender.com";
+      const host ="https://decentralized-curreny.onrender.com"?"https://decentralized-curreny.onrender.com":"http://localhost:2000";
       const response = await fetch(`${host}/api/auth/userlogin`, {
         method: "POST",
         headers: {
@@ -151,7 +151,7 @@ function Login(props) {
               <button className="loginbtn mt-3">Sign In</button>
             </div>
           </form>
-          <div className="flex justify-center mt-4">
+          {/* <div className="flex justify-center mt-4">
             <div className="or-container">
               <span className="or-line"></span>
               <span className="or-text">OR</span>
@@ -165,7 +165,7 @@ function Login(props) {
             <button className="social-btn ml-2">
               <img src={facebook} alt="facebook" className="facebook" />
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

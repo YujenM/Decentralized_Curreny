@@ -4,7 +4,7 @@ import * as icon from '@fortawesome/free-solid-svg-icons';
 import UserContext from '../Context/User/Usercontext';
 
 function Personalinfo(props) {
-    const host = "https://decentralized-curreny.onrender.com";
+    const host ="https://decentralized-curreny.onrender.com"?"https://decentralized-curreny.onrender.com":"http://localhost:2000";
     const authToken = localStorage.getItem('authtoken');
     const [imagePreview, setImagePreview] = useState(null);
     const [uploadStatus, setUploadStatus] = useState(null);
