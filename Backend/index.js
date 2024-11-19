@@ -48,6 +48,11 @@ app.use('/Markapi/Weeklydata',getweeklydata);
 const settingsroute=require('./routes/Settings/settingroutes');
 app.use('/Markapi/Settings',settingsroute);
 
+const PredictionRoute=require('./routes/Prediction/PredictionRoute.js');
+app.use('/Markapi/Prediction',PredictionRoute);
+
+
+
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
