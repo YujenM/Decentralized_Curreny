@@ -5,8 +5,6 @@ import "../Css/LoginSignup.css";
 import logo from "../Images/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as icon from "@fortawesome/free-solid-svg-icons";
-import google from "../Images/Google.png";
-import facebook from "../Images/Facebook.png";
 
 function Login(props) {
   const location = useLocation();

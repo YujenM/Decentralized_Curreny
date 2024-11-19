@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link, useLocation, json } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import "../Css/LoginSignup.css";
 import logo from "../Images/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as icon from "@fortawesome/free-solid-svg-icons";
-import google from "../Images/Google.png";
-import facebook from "../Images/Facebook.png";
-
 function Signuppage(props) {
   const location = useLocation();
   const [signup, setSignup] = useState({ username: '', email: '', password: '' });
@@ -28,7 +25,7 @@ function Signuppage(props) {
     setPasswordVisible(!passwordVisible);
   };
 
-  const [errorMessage, setErrorMessage] = useState("");
+  const [setErrorMessage] = useState("");
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { username, email, password } = signup;
