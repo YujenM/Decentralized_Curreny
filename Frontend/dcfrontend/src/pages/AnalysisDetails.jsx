@@ -18,8 +18,8 @@ function AnalysisDetails(props) {
 
   useEffect(() => {
     if (!hasFetchedData.current && uuid) {
-      setLoading(true); // Start spinner before fetching data
-      getanalysisdatabyid(uuid).then(() => setLoading(false)); // Stop spinner after fetching data
+      setLoading(true); 
+      getanalysisdatabyid(uuid).then(() => setLoading(false)); 
       hasFetchedData.current = true;
     }
   }, [getanalysisdatabyid, uuid]);

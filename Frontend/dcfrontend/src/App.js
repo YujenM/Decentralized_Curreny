@@ -16,6 +16,7 @@ import Navbar from './Components/Nabar';
 import Dashboard from './pages/Dashboard';
 import Trending from  './pages/Trending';
 import Portfolio from './pages/Portfolio'
+import Analysis from './pages/Analysis';
 // 
 import ProtectedRoutes from './Components/ProtectedRoutes';
 // states
@@ -90,6 +91,11 @@ function App() {
             <Route exact path='/dashboard/analysis' element={
               <ProtectedRoutes>
                 <Analysisdata Displayalert={Displayalert} />
+              </ProtectedRoutes>
+            } />
+            <Route exact path='/analysis' element={
+              <ProtectedRoutes>
+                <Analysis Displayalert={Displayalert} />
               </ProtectedRoutes>
             } />
             <Route exact path='/dashboard/News' element={
