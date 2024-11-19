@@ -7,6 +7,7 @@ const Trendingstate = (props) => {
     const [trendingdata, setTrendingdata] = useState([]);
     const authToken = localStorage.getItem('authtoken');
     const [getportfolio,setgetportfolio]=useState([]);
+    const [getprediction,setgetprediction]=useState([]);
     const gettrendingdata=async(crypto,time)=>{
         try{
 
@@ -51,8 +52,36 @@ const Trendingstate = (props) => {
             console.log('An error occurred:', error.message);
         }
     };
+    const getpredictiondata=async()=>{
+        try{
+            const response=await fetch(`${host}/Markapi/Prediction/getcryptoprediction`,{
+                method:'GET',
+                headers:{
+                    'Content-Type':'application/json',
+                },
+            })
+            if(!response.ok){
+                if(response.status===404){
+                    console.log('No prediction data found');
+                    setgetprediction({success:false,data:[]});
+                    return;
+                }
+
+                const errorData=await response.json();
+                console.log(errorData.error || 'Failed to fetch prediction data');
+                return;
+            }
+            const json=await response.json();
+            setgetprediction(json);
+
+        }catch(err){
+            console.log(err)
+        }
+        
+
+    }
     return (
-        <Trendingcontext.Provider value={{trendingdata,getportfolio ,gettrendingdata ,getportfoliodata}}>
+        <Trendingcontext.Provider value={{trendingdata,getportfolio ,gettrendingdata ,getportfoliodata,getprediction,getpredictiondata}}>
             {props.children}
         </Trendingcontext.Provider>
     );
