@@ -27,27 +27,37 @@ const InsertPrediction = async (req, res) => {
             const predictedPrices = []; // Array to store predicted prices
 
             fs.createReadStream(filePath)
-                .pipe(csv()) 
+                .pipe(csv())
                 .on('data', (row) => {
                     const predictedPrice = row['Predicted Price'] || row['PredictedPrice'];
                     predictedPrices.push(predictedPrice); // Add predicted price to array
                 })
                 .on('end', async () => {
-                    
-                    const predictionId = `${uuid}-${crypto}`; 
+                    try {
+                        const predictionId = `${uuid}-${crypto}`;
 
-                    const query = `
-                        INSERT INTO Prediction (Prediction_ID, UUID, PredictionPrice)
-                        VALUES (?, ?, ?)
-                    `;
+                        // Delete existing data for this Prediction_ID
+                        const deleteQuery = `
+                            DELETE FROM Prediction
+                            WHERE Prediction_ID = ?
+                        `;
+                        await db.getquery(deleteQuery, [predictionId]);
 
-                    await db.getquery(query, [
-                        predictionId,
-                        uuid,
-                        JSON.stringify(predictedPrices), 
-                    ]);
+                        // Insert new data
+                        const insertQuery = `
+                            INSERT INTO Prediction (Prediction_ID, UUID, PredictionPrice)
+                            VALUES (?, ?, ?)
+                        `;
+                        await db.getquery(insertQuery, [
+                            predictionId,
+                            uuid,
+                            JSON.stringify(predictedPrices), 
+                        ]);
 
-                    console.log(`${crypto} data inserted successfully!`);
+                        console.log(`${crypto} data inserted successfully!`);
+                    } catch (err) {
+                        console.error(`Error processing ${crypto}:`, err);
+                    }
                 });
         }
 
@@ -57,6 +67,7 @@ const InsertPrediction = async (req, res) => {
         res.status(500).send({ error: 'Failed to insert prediction data.' });
     }
 };
+
 
 const getcryptoprediction = async (req, res) => {
     try {
