@@ -23,9 +23,9 @@ export const Navbaritems=[
         cName:'nav-text',
     },
     {
-        title:'Profile',
-        'path':'/profile',
-        icon : <FontAwesomeIcon icon={icon.faUser} />,
+        title:'Analysis',
+        'path':'/analysis',
+        icon : <FontAwesomeIcon icon={icon.faChartColumn} />,
         cName:'nav-text',
 
     },
