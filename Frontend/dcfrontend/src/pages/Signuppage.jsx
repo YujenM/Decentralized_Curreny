@@ -4,10 +4,13 @@ import "../Css/LoginSignup.css";
 import logo from "../Images/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as icon from "@fortawesome/free-solid-svg-icons";
+import Spinner from "../Components/Spinner";
+
 function Signuppage(props) {
   const location = useLocation();
-  const [signup, setSignup] = useState({ username: '', email: '', password: '' });
+  const [signup, setSignup] = useState({ username: "", email: "", password: "" });
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Spinner state
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,23 +28,27 @@ function Signuppage(props) {
     setPasswordVisible(!passwordVisible);
   };
 
-  const [setErrorMessage] = useState("");
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { username, email, password } = signup;
-  
+
     const requestBody = {
       username: username.trim(),
       email: email.trim(),
       password: password.trim(),
     };
-    if(username === '' || email === '' || password === ''){
+
+    if (username === "" || email === "" || password === "") {
       props.Displayalert("Please fill all the fields", "Danger", "faExclamation");
       return;
     }
+
+    setIsLoading(true); // Start spinner
     try {
-      // const host ="http://localhost:2000";
-      const host ="https://decentralized-curreny.onrender.com"?"https://decentralized-curreny.onrender.com":"http://localhost:2000";
+      const host =
+        "https://decentralized-curreny.onrender.com"
+          ? "https://decentralized-curreny.onrender.com"
+          : "http://localhost:2000";
       const response = await fetch(`${host}/api/auth/usersignup`, {
         method: "POST",
         headers: {
@@ -50,18 +57,16 @@ function Signuppage(props) {
         },
         body: JSON.stringify(requestBody),
       });
-  
+
       const json = await response.json();
-      console.log(requestBody);
-  
+
       if (response.ok && json.success) {
-        props.Displayalert("Signup succesfull", "Check", "facheck");
-        setSignup({ username: '', email: '', password: '' });
+        props.Displayalert("Signup successful", "Check", "faCheck");
+        setSignup({ username: "", email: "", password: "" });
         navigate("/login");
       } else {
         if (json.error && Array.isArray(json.error)) {
           json.error.forEach((err) => {
-            // alert(err.msg);
             props.Displayalert(`${err.msg}`, "Info", "faExclamation");
           });
         } else {
@@ -70,30 +75,32 @@ function Signuppage(props) {
       }
     } catch (error) {
       console.error("Error:", error);
-      setErrorMessage("Error during signup. Please try again.");
-      props.Displayalert(`${error}`, "Danger", "faExclamation");
+      props.Displayalert("Error during signup. Please try again.", "Danger", "faExclamation");
+    } finally {
+      setIsLoading(false); // Stop spinner
     }
   };
-  
-  
-
-
-
-
 
   return (
     <div className="signuppage">
-      <div className="Signupform flex flex-col">
+      {isLoading && <Spinner />} {/* Display Spinner while loading */}
+      <div className={`Signupform flex flex-col ${isLoading ? "opacity-50 pointer-events-none" : ""}`}>
         <div className="logo">
           <img src={logo} alt="logo" className="logo-img" />
           <h1 className="mt-2 text-3xl font-bold">M.A.R.K</h1>
         </div>
         <div className="gotologinorsignup flex justify-center mt-2 ml-3">
-          <Link to="/login" className={`auth-link ${location.pathname === "/login" ? "active" : ""}`}>
+          <Link
+            to="/login"
+            className={`auth-link ${location.pathname === "/login" ? "active" : ""}`}
+          >
             Sign In
           </Link>
           <span className="separator">|</span>
-          <Link to="/signup" className={`auth-link ${location.pathname === "/signup" ? "active" : ""}`}>
+          <Link
+            to="/signup"
+            className={`auth-link ${location.pathname === "/signup" ? "active" : ""}`}
+          >
             Sign Up
           </Link>
         </div>
@@ -144,34 +151,17 @@ function Signuppage(props) {
               onClick={togglePasswordVisibility}
             >
               <FontAwesomeIcon
-                  className="eyeicon"
-                  icon={passwordVisible ? icon.faEyeSlash : icon.faEye}
-                />
+                className="eyeicon"
+                icon={passwordVisible ? icon.faEyeSlash : icon.faEye}
+              />
             </span>
           </div>
-          {/* Uncomment the error message display here if needed */}
-          {/* {errorMessage && (
-            <p className="error-message text-red-500">{errorMessage}</p>
-          )} */}
           <div className="submit-btn flex justify-center">
-            <button type="submit" className="signupbtn mt-3">Sign Up</button>
+            <button type="submit" className="signupbtn mt-3" disabled={isLoading}>
+              {isLoading ? "Signing Up..." : "Sign Up"}
+            </button>
           </div>
         </form>
-        {/* <div className="flex justify-center mt-4">
-          <div className="or-container">
-            <span className="or-line"></span>
-            <span className="or-text">OR</span>
-            <span className="or-line"></span>
-          </div>
-        </div>
-        <div className="flex justify-center w-full mt-7">
-          <button className="social-btn mr-2">
-            <img src={google} alt="google" className="google" />
-          </button>
-          <button className="social-btn ml-2">
-            <img src={facebook} alt="facebook" className="facebook" />
-          </button>
-        </div> */}
       </div>
     </div>
   );
