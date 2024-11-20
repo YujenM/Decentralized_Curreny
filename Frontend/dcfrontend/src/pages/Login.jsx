@@ -1,23 +1,25 @@
-import React, { useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link, useLocation } from "react-router-dom";
 import "../Css/LoginSignup.css";
 import logo from "../Images/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as icon from "@fortawesome/free-solid-svg-icons";
+import Spinner from "../Components/Spinner";
 
 function Login(props) {
   const location = useLocation();
   const [login, setLogin] = useState({ username: "", email: "", password: "" });
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [loading, setLoading] = useState(false); // New state for spinner
   const navigate = useNavigate();
+
   useEffect(() => {
     const authToken = localStorage.getItem("authtoken");
     if (authToken) {
       navigate("/dashboard");
     }
   }, [navigate]);
-
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -34,8 +36,10 @@ function Login(props) {
     }
 
     try {
-      // const host ="http://localhost:2000";
-      const host ="https://decentralized-curreny.onrender.com"?"https://decentralized-curreny.onrender.com":"http://localhost:2000";
+      setLoading(true); 
+      const host =
+        "https://decentralized-curreny.onrender.com" ||
+        "http://localhost:2000";
       const response = await fetch(`${host}/api/auth/userlogin`, {
         method: "POST",
         headers: {
@@ -48,24 +52,23 @@ function Login(props) {
       });
 
       const json = await response.json();
-      // console.log(json);
 
       if (json.success) {
         localStorage.setItem("authtoken", json.token);
-        console.log("Login success");
         setLogin({ username: "", password: "" });
         navigate("/dashboard");
         props.Displayalert("Login successful!", "Check", "faCheck");
       } else {
-        console.log("Login failed:", json.message);
         props.Displayalert("Invalid Credentials", "Danger", "faExclamation");
       }
     } catch (error) {
       console.error("Error during login:", error);
       props.Displayalert("Error during login", "Danger", "faExclamation");
+    } finally {
+      setLoading(false);
     }
   };
- 
+
   const onChange = (e) => {
     setLogin({
       ...login,
@@ -76,8 +79,8 @@ function Login(props) {
   return (
     <div className="loginpage">
       <div className="loginform flex flex-col">
-        <div className="logo ">
-          <img src={logo} alt="logo" className="logo-img " />
+        <div className="logo">
+          <img src={logo} alt="logo" className="logo-img" />
           <h1 className="mt-2 text-3xl font-bold">M.A.R.K</h1>
         </div>
         <div className="gotologinorsignup flex justify-center mt-2 ml-3">
@@ -99,71 +102,63 @@ function Login(props) {
             Sign Up
           </Link>
         </div>
-        <div className=" mb-4">
-          <form onSubmit={handlesubmit}>
-            <div className="username">
-              <label htmlFor="username" className="labels">
-                <FontAwesomeIcon className="mr-2 " icon={icon.faUser} />
-                Username / Email
-              </label>{" "}
-              <br />
-              <input
-                type="text"
-                name="username"
-                value={login.username}
-                onChange={onChange}
-                className="w-full  px-4 py-2 border rounded-lg focus:outline-none mt-2"
-                placeholder="Enter your username"
-              />
-            </div>
-            <div className="mb-4 mt-4 relative">
-              <label htmlFor="password" className="labels">
-                <FontAwesomeIcon className="mr-2" icon={icon.faLock} />
-                Password
-              </label>{" "}
-              <br />
-              <input
-                type={passwordVisible ? "text" : "password"}
-                name="password"
-                value={login.password}
-                onChange={onChange}
-                className="w-full px-4 mt-2 py-2 border rounded-lg focus:outline-none"
-                placeholder="Enter your password"
-              />
-              <span 
-                className="absolute inset-y-8 right-0 flex items-center px-3 cursor-pointer mt-5"
-                onClick={togglePasswordVisibility}
-              >
-                <FontAwesomeIcon
-                  className="eyeicon"
-                  icon={passwordVisible ? icon.faEyeSlash : icon.faEye}
+        <div className="mb-4">
+          {loading ? ( // Display spinner while loading
+            <Spinner />
+          ) : (
+            <form onSubmit={handlesubmit}>
+              <div className="username">
+                <label htmlFor="username" className="labels">
+                  <FontAwesomeIcon className="mr-2" icon={icon.faUser} />
+                  Username / Email
+                </label>{" "}
+                <br />
+                <input
+                  type="text"
+                  name="username"
+                  value={login.username}
+                  onChange={onChange}
+                  className="w-full px-4 py-2 border rounded-lg focus:outline-none mt-2"
+                  placeholder="Enter your username"
                 />
-              </span>
-            </div>
-            <div className="flex justify-end ">
-              <Link to="/forgetpassword" className="text-sm forgotpass text-blue-500">
-                Forgot Password?
-              </Link>
-            </div>
-            <div className="submit-btn flex justify-center ">
-              <button className="loginbtn mt-3">Sign In</button>
-            </div>
-          </form>
-          {/* <div className="flex justify-center mt-4">
-            <div className="or-container">
-              <span className="or-line"></span>
-              <span className="or-text">OR</span>
-              <span className="or-line"></span>
-            </div>
-          </div>
-          <div className="flex justify-center w-full mt-7">
-            <button className="social-btn mr-2">
-              <img src={google} alt="google" className="google" />
-            </button>
-            <button className="social-btn ml-2">
-              <img src={facebook} alt="facebook" className="facebook" />
-            </button>
-          </div> */}
+              </div>
+              <div className="mb-4 mt-4 relative">
+                <label htmlFor="password" className="labels">
+                  <FontAwesomeIcon className="mr-2" icon={icon.faLock} />
+                  Password
+                </label>{" "}
+                <br />
+                <input
+                  type={passwordVisible ? "text" : "password"}
+                  name="password"
+                  value={login.password}
+                  onChange={onChange}
+                  className="w-full px-4 mt-2 py-2 border rounded-lg focus:outline-none"
+                  placeholder="Enter your password"
+                />
+                <span
+                  className="absolute inset-y-8 right-0 flex items-center px-3 cursor-pointer mt-5"
+                  onClick={togglePasswordVisibility}
+                >
+                  <FontAwesomeIcon
+                    className="eyeicon"
+                    icon={passwordVisible ? icon.faEyeSlash : icon.faEye}
+                  />
+                </span>
+              </div>
+              <div className="flex justify-end">
+                <Link
+                  to="/forgetpassword"
+                  className="text-sm forgotpass text-blue-500"
+                >
+                  Forgot Password?
+                </Link>
+              </div>
+              <div className="submit-btn flex justify-center">
+                <button className="loginbtn mt-3">Sign In</button>
+              </div>
+            </form>
+          )}
         </div>
       </div>
     </div>
