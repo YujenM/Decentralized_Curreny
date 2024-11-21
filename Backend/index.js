@@ -53,9 +53,9 @@ const PredictionRoute=require('./routes/Prediction/PredictionRoute.js');
 app.use('/Markapi/Prediction',PredictionRoute);
 
 const listOfUUID = ["Qwsogvtv82FCd", "razxDUgYGNAdQ", "25W7FG7om", "D7B1x_ks7WhV5", "dvUj0CzDZ"];
-cron.schedule('0 * * * *', async () => { 
+ccron.schedule('0 * * * *', async () => {  
     const currentTime = new Date();
-    const nextRunTime = new Date(currentTime.getTime() + 60 * 60 * 1000);  
+    const nextRunTime = new Date(currentTime.getTime() + 60 * 60 * 1000); 
     const formattedCurrentTime = currentTime.toLocaleString();
     const formattedNextRunTime = nextRunTime.toLocaleString();
 
@@ -63,12 +63,14 @@ cron.schedule('0 * * * *', async () => {
     console.log(`Next cron job scheduled to run at ${formattedNextRunTime}`);
 
     try {
-        console.log("Starting to fetch crypto data...");
-        await fetchAllCryptoData(listOfUUID); 
+        console.log("Triggering /addcryptos route via POST request...");
+        await axios.post('https://decentralized-curreny.onrender.com/api/crypto/addcryptos', { listOfUUID });
         console.log("Crypto data fetch completed!");
     } catch (error) {
-        console.error('Error fetching crypto data:', error);
+        console.error('Error triggering /addcryptos route:', error);
     }
+    const timeDifference = nextRunTime - currentTime;
+    console.log(`Time until next cron job: ${timeDifference / 1000} seconds`);
 });
 
 
