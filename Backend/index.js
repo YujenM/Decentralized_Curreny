@@ -53,7 +53,7 @@ const PredictionRoute=require('./routes/Prediction/PredictionRoute.js');
 app.use('/Markapi/Prediction',PredictionRoute);
 
 const listOfUUID = ["Qwsogvtv82FCd", "razxDUgYGNAdQ", "25W7FG7om", "D7B1x_ks7WhV5", "dvUj0CzDZ"];
-ccron.schedule('0 * * * *', async () => {  
+cron.schedule('0 * * * *', async () => {  
     const currentTime = new Date();
     const nextRunTime = new Date(currentTime.getTime() + 60 * 60 * 1000); 
     const formattedCurrentTime = currentTime.toLocaleString();
