@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as icon from '@fortawesome/free-solid-svg-icons';
 import Spinner from '../Components/Spinner';
 
+
 function AnalysisDetails(props) {
   const location = useLocation();
   const { uuid } = location.state || {};
@@ -59,6 +60,7 @@ function AnalysisDetails(props) {
       console.log("Error: " + err.message);
     }
   };
+  
 
   return (
     <div className='container analysisbg'>
@@ -88,7 +90,9 @@ function AnalysisDetails(props) {
                 <div className='analyisbtn pb-5'>
                   <button onClick={addtoportfolio}>Add to Portfolio <FontAwesomeIcon icon={icon.faChevronRight} /></button>
                 </div>
+
               </div>
+              
             ))
           ) : (
             <p>No analysis data available.</p>
@@ -97,7 +101,10 @@ function AnalysisDetails(props) {
       ) : (
         <p>No UUID passed.</p>
       )}
+      
+
     </div>
+    
   );
 }
 

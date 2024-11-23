@@ -4,6 +4,7 @@ import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import '../Css/Prediction.css';
 import UserContext from '../Context/Trendingdata/Trendingcontext';
 import Spinner from '../Components/Spinner';
+import Predictionchart from '../Components/Predctionchart';
 
 function Analysis() {
     const { getprediction, getpredictiondata } = useContext(UserContext);
@@ -57,6 +58,9 @@ function Analysis() {
                 ) : (
                     <p>No data available</p>
                 )}
+            </div>
+            <div>
+                  <Predictionchart />
             </div>
         </div>
     );
