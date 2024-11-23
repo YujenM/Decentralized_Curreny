@@ -50,4 +50,5 @@ router.get('/getanalysiscryptodata/:id',analysisdataservice.getanalysiscryptodat
 router.get('/alltabledata',tabledataservices.fetchtabledata);
 router.get('/allcurrencychartdata',allcurrencychart.fetchallcurrencychart);
 router.get('/trendingdata/:cryptoname/:cryptotime',trendingmodule.fetchtrendingdata)
+
 module.exports=router;

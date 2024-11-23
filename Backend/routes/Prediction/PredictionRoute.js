@@ -8,4 +8,6 @@ router.post('/InsertPrediction', Predictionsercive.InsertPrediction);
 
 router.get('/getcryptoprediction', Predictionsercive.getcryptoprediction);
 
+router.get('/getcryptopredictiondata/:cryptoid', Predictionsercive.getcryptopredictiondata);
+
 module.exports = router;

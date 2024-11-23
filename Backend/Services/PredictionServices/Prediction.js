@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const csv = require('csv-parser'); // Library for parsing CSV
+const csv = require('csv-parser'); 
 const db = require('../../Database/ConnectDb.js');
 
 const csvFiles = {
@@ -112,4 +112,33 @@ const getcryptoprediction = async (req, res) => {
     }
 }
 
-module.exports = { InsertPrediction,getcryptoprediction };
+const getcryptopredictiondata=async(req,res)=>{
+    try{
+        const cryptoid=req.params.cryptoid;
+        const queery="SELECT cc.PredictionPrice FROM Prediction cc WHERE cc.UUID=?";
+        const data=await db.getquery(queery,[cryptoid]);
+        if(data.length===0){
+            return res.status(404).send({status:"error",message:"No data found"});
+        }
+        const cleandata=data.map(item=>{
+            let PredictionPrice;
+            try{
+                PredictionPrice=JSON.parse(item.PredictionPrice.replace(/\\/g,''));
+            }catch(error){
+                PredictionPrice=[];
+            }
+            return{
+                ...item,
+                PredictionPrice:PredictionPrice,
+            };
+        });
+        return res.status(200).send({ status: 'success', data: cleandata });
+
+    }catch(err){
+        console.log(err);
+        res.status(500).json({ success: false, message: 'Error fetching predictions' });
+    }
+}
+
+
+module.exports = { InsertPrediction,getcryptoprediction,getcryptopredictiondata };
