@@ -35,15 +35,14 @@ function PredictionChart() {
 
     const fetchPredictionData = async (uuid) => {
         try {
-            const host ="https://decentralized-curreny.onrender.com"?"https://decentralized-curreny.onrender.com":"http://localhost:2000";
+            const host = "https://decentralized-curreny.onrender.com" || "http://localhost:2000";
             const response = await fetch(`${host}/Markapi/Prediction/getcryptopredictiondata/${uuid}`);
             const data = await response.json();
 
-            console.log('Fetched Data:', data); 
+            console.log('Fetched Data:', data);
 
             if (data?.status === 'success' && Array.isArray(data.data[0]?.PredictionPrice)) {
-                // Ensure data is numeric and sorted
-                const cleanData = data.data[0].PredictionPrice.map(Number);
+                const cleanData = data.data[0].PredictionPrice.map(Number); // Ensure numeric data
                 setPredictionData(cleanData);
             } else {
                 throw new Error('Invalid data format from API');
@@ -58,7 +57,7 @@ function PredictionChart() {
         if (selectedCryptoUUID) {
             fetchPredictionData(selectedCryptoUUID);
         }
-    }, );
+    }); // Dependency added for re-fetching when selectedCrypto changes
 
     const handleCryptoChange = (cryptoName) => {
         setSelectedCrypto(cryptoName);
@@ -71,7 +70,7 @@ function PredictionChart() {
                 <select
                     value={selectedCrypto}
                     onChange={(e) => handleCryptoChange(e.target.value)}
-                    style={{ padding: '8px', borderRadius: '4px', color:"red"} }
+                    style={{ padding: '8px', borderRadius: '4px', color: 'black' }}
                 >
                     {cryptos.map((crypto) => (
                         <option key={crypto.value} value={crypto.name}>
@@ -84,7 +83,12 @@ function PredictionChart() {
             {predictionData.length > 0 ? (
                 <Line
                     data={{
-                        labels: predictionData.map((_, i) => `Day ${i + 1}`),
+                        labels: predictionData.map((_, i) => {
+                            const today = new Date();
+                            const futureDate = new Date(today);
+                            futureDate.setDate(today.getDate() + i);
+                            return futureDate.toLocaleDateString(); 
+                        }),
                         datasets: [
                             {
                                 label: `Predicted Price (USD)`,
