@@ -69,7 +69,7 @@ function PredictionChart() {
                 <select
                     value={selectedCrypto}
                     onChange={(e) => handleCryptoChange(e.target.value)}
-                    style={{ padding: '8px', borderRadius: '4px', color: 'red' }}
+                    style={{ padding: '8px', borderRadius: '4px', color: 'black' }}
                 >
                     {cryptos.map((crypto) => (
                         <option key={crypto.value} value={crypto.name}>
