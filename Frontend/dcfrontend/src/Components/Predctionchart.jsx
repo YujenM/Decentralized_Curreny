@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
@@ -25,13 +25,14 @@ function PredictionChart() {
     const [predictionData, setPredictionData] = useState([]);
     const [selectedCrypto, setSelectedCrypto] = useState('Bitcoin');
 
-    const cryptos = [
+    // Wrap the cryptos array in useMemo to prevent unnecessary re-renders
+    const cryptos = useMemo(() => [
         { name: 'Bitcoin', value: 'Qwsogvtv82FCd' },
         { name: 'Ethereum', value: 'razxDUgYGNAdQ' },
         { name: 'Polkadot', value: 'D7B1x_ks7WhV5' },
         { name: 'Litecoin', value: 'dvUj0CzDZ' },
         { name: 'Avalanche', value: '25W7FG7om' },
-    ];
+    ], []); // Empty dependency array means it's memoized only once
 
     const fetchPredictionData = async (uuid) => {
         try {
@@ -39,10 +40,8 @@ function PredictionChart() {
             const response = await fetch(`${host}/Markapi/Prediction/getcryptopredictiondata/${uuid}`);
             const data = await response.json();
 
-            console.log('Fetched Data:', data);
-
             if (data?.status === 'success' && Array.isArray(data.data[0]?.PredictionPrice)) {
-                const cleanData = data.data[0].PredictionPrice.map(Number); // Ensure numeric data
+                const cleanData = data.data[0].PredictionPrice.map(Number);
                 setPredictionData(cleanData);
             } else {
                 throw new Error('Invalid data format from API');
@@ -57,7 +56,7 @@ function PredictionChart() {
         if (selectedCryptoUUID) {
             fetchPredictionData(selectedCryptoUUID);
         }
-    }); // Dependency added for re-fetching when selectedCrypto changes
+    }, [selectedCrypto, cryptos]); // Added cryptos to dependency array
 
     const handleCryptoChange = (cryptoName) => {
         setSelectedCrypto(cryptoName);
@@ -70,7 +69,7 @@ function PredictionChart() {
                 <select
                     value={selectedCrypto}
                     onChange={(e) => handleCryptoChange(e.target.value)}
-                    style={{ padding: '8px', borderRadius: '4px', color: 'black' }}
+                    style={{ padding: '8px', borderRadius: '4px', color: 'red' }}
                 >
                     {cryptos.map((crypto) => (
                         <option key={crypto.value} value={crypto.name}>
@@ -85,9 +84,9 @@ function PredictionChart() {
                     data={{
                         labels: predictionData.map((_, i) => {
                             const today = new Date();
-                            const futureDate = new Date(today);
-                            futureDate.setDate(today.getDate() + i);
-                            return futureDate.toLocaleDateString(); 
+                            const date = new Date(today);
+                            date.setDate(today.getDate() + i); 
+                            return date.toLocaleDateString(); 
                         }),
                         datasets: [
                             {
