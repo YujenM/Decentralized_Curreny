@@ -53,7 +53,6 @@ app.use('/Markapi/Settings',settingsroute);
 const PredictionRoute=require('./routes/Prediction/PredictionRoute.js');
 app.use('/Markapi/Prediction',PredictionRoute);
 
-const listOfUUID = ["Qwsogvtv82FCd", "razxDUgYGNAdQ", "25W7FG7om", "D7B1x_ks7WhV5", "dvUj0CzDZ"];
 cron.schedule('0 * * * *', async () => {  
     const currentTime = new Date();
     const nextRunTime = new Date(currentTime.getTime() + 60 * 60 * 1000); 
@@ -65,7 +64,7 @@ cron.schedule('0 * * * *', async () => {
 
     try {
         console.log("Triggering /addcryptos route via POST request...");
-        await axios.post('https://decentralized-curreny.onrender.com/api/crypto/addcryptos', { listOfUUID });
+        await axios.post('https://decentralized-curreny.onrender.com/api/coincrypto/addcryptos');
         console.log("Crypto data fetch completed!");
     } catch (error) {
         console.error('Error triggering /addcryptos route:', error);
