@@ -7,7 +7,7 @@ const generateSixDigitId = () => {
 
 const fetchnewsdata = async () => {
     try {
-        const newsurl = `https://cryptocurrency-news2.p.rapidapi.com/v1/coindesk`;
+        const newsurl = `https://cryptocurrency-news2.p.rapidapi.com/v1/cryptodaily`;
         const options = {
             method: 'GET',
             url: newsurl,
