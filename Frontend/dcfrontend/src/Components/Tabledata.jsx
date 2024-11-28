@@ -21,7 +21,7 @@ function Tabledata() {
       <Table className='crypto-table'>
       <Thead>
         <Tr>
-          <Th>Crypto Rank</Th>
+          <Th>Crypto Name</Th>
           <Th>Price</Th>
           <Th>Stock Exchange</Th>
           <Th>Market Cap</Th>

@@ -53,25 +53,7 @@ app.use('/Markapi/Settings',settingsroute);
 const PredictionRoute=require('./routes/Prediction/PredictionRoute.js');
 app.use('/Markapi/Prediction',PredictionRoute);
 
-cron.schedule('0 * * * *', async () => {  
-    const currentTime = new Date();
-    const nextRunTime = new Date(currentTime.getTime() + 60 * 60 * 1000); 
-    const formattedCurrentTime = currentTime.toLocaleString();
-    const formattedNextRunTime = nextRunTime.toLocaleString();
 
-    console.log(`Cron job triggered at ${formattedCurrentTime}`);
-    console.log(`Next cron job scheduled to run at ${formattedNextRunTime}`);
-
-    try {
-        console.log("Triggering /addcryptos route via POST request...");
-        await axios.post('https://decentralized-curreny.onrender.com/api/coincrypto/addcryptos');
-        console.log("Crypto data fetch completed!");
-    } catch (error) {
-        console.error('Error triggering /addcryptos route:', error);
-    }
-    const timeDifference = nextRunTime - currentTime;
-    console.log(`Time until next cron job: ${timeDifference / 1000} seconds`);
-});
 
 
 

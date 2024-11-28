@@ -29,10 +29,10 @@ function PredictionChart() {
     const cryptos = useMemo(() => [
         { name: 'Bitcoin', value: 'Qwsogvtv82FCd' },
         { name: 'Ethereum', value: 'razxDUgYGNAdQ' },
-        { name: 'Polkadot', value: 'D7B1x_ks7WhV5' },
-        { name: 'Litecoin', value: 'dvUj0CzDZ' },
-        { name: 'Avalanche', value: '25W7FG7om' },
-    ], []); // Empty dependency array means it's memoized only once
+        { name: 'Polkadot', value: '25W7FG7om'},
+        { name: 'Litecoin', value: 'D7B1x_ks7WhV5' },
+        { name: 'Avalanche', value: 'dvUj0CzDZ' },
+    ], []); 
 
     const fetchPredictionData = async (uuid) => {
         try {
@@ -84,9 +84,11 @@ function PredictionChart() {
                     data={{
                         labels: predictionData.map((_, i) => {
                             const today = new Date();
-                            const date = new Date(today);
-                            date.setDate(today.getDate() + i); 
-                            return date.toLocaleDateString(); 
+                            const tomorrow = new Date(today);
+                            tomorrow.setDate(today.getDate() + 1); // Start from tomorrow
+                            const date = new Date(tomorrow);
+                            date.setDate(tomorrow.getDate() + i); // Add i days to tomorrow
+                            return date.toLocaleDateString();
                         }),
                         datasets: [
                             {
