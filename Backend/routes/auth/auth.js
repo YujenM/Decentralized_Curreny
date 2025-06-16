@@ -22,6 +22,7 @@ const JWT_Secret_key = process.env.SECRET_KEY;
 const {userlogin}=require('../../Services/authentication/Login');
 const {validateSignup,userSignup}=require('../../Services/authentication/Signup');
 const forgetpasswordservice =require('../../Services/authentication/forgetpassword');
+console.log("cehcking pr")
 
 // testing route
 router.get('/test', (req, res) => {
